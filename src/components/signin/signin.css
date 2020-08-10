@@ -1,0 +1,12 @@
+section {
+  border-radius: 1em;
+  border: black solid 2px;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) 
+}
+
+/* br3 ba v-mid dark-gray b--black-1 mv4 w-100 w-50 mw6 center */

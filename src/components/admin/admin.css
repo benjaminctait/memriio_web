@@ -1,0 +1,143 @@
+.some-page-wrapper {
+  position: relative;
+  min-height: 100vmin;
+  min-width: 100%;
+}
+
+.headerrow {
+  min-height: 55px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 92vmin;
+}
+
+.newButton{
+  margin-top: 2px;
+  height: 46px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 2px;
+  background-color: whitesmoke;
+  outline: none;
+}
+.newButton:hover{
+  border-color: transparent;
+  border: blue 2px solid;
+
+  transform: scale(1.02);
+}
+
+.textBox{
+  height: 40px;
+  border-radius: 10px;
+  margin-left: 8px;
+  min-width: 400px;
+  margin: 2px;
+  outline: none;
+ 
+}
+
+.textBox:hover{
+  border-color: transparent;
+  border:navy 2px solid;
+  transform: scale(1.01);
+  
+}
+.textBox:active,.searchBox:focus{
+  border-color: transparent;
+  border: navy 2px solid;
+  
+  
+}
+
+.headtext {
+  font-size: large;
+  font-weight: bold;
+  margin-left: 2px;
+  margin-bottom: 10px;
+}
+
+.admin-zone {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  margin-left: 8px;
+  margin-right: 8px;
+  flex: 1;
+  min-height: 100%;
+  max-width: 100%;
+  background-color: white;
+}
+
+.searchHeader{
+  display:flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-bottom: 5px;
+}
+
+.floatLeft{
+  text-align: left;
+
+}
+
+.backdropStyle {
+  position: fixed;
+  top: 0px;
+  bottom : 0px;
+  left : 0px;
+  right : 0px;
+  background-color : rgba(0,0,0,0.85);
+  padding: 50;
+  z-index: 2;
+  
+}
+.modal {
+  position: relative;
+  top: 20%;
+  left: 30%;
+  max-width: 30%;
+  min-height: 50%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  z-index: 3;
+  outline: none;
+}
+.labelpair{
+  display: flex;
+  flex-direction: column;
+}
+.labeltext{
+  font-weight: normal;
+  margin: 2px;  
+}
+.spacer{
+  margin-top: 8px;
+}
+.small{
+  max-height: 40px;
+  min-width: 80px;
+}
+.small2{
+  max-height: 40px;
+  min-width: 40px;
+}
+.mw{
+  min-width: 50%;
+}
+.modalfooter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

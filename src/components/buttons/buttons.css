@@ -1,0 +1,81 @@
+.checkbox{
+  width: 15px;
+  height: 15px;  
+  border: solid blue 1px;
+  border-radius: 25%; 
+  margin-right: 10px;  
+}
+
+.checkboxLabel{
+  margin: 0px;
+  font-size: small;
+}
+
+.ImageLabelImage{
+  width: 15px;
+  height: 15px;  
+  margin-right: 10px;  
+}
+.rightBadge{
+  width: 15px;
+  height: 15px;
+  
+}
+.ImageLabel{
+  position: relative;
+  width:100%;
+  cursor: pointer;
+
+}
+.ImageLabel:hover{
+  border-radius: 8px;
+  background-color:silver;
+  transform: scale(1.0);
+  box-shadow: 2px 2px lightslategray;
+  padding-left: 2px;
+}
+.rightBadge{
+  position: absolute;
+  top:2px;
+  left: 85%;
+}
+.rightBadge:hover{
+  border-radius: 7px;
+  background-color: grey;
+  transform: scale(1.1);
+}
+
+.cloudText{
+  margin: 5px;
+  font-size: large;
+}
+
+.cloudLogo{
+  width: 20px;
+  height: 20px;  
+  margin-right: 10px;  
+}
+
+.CloudLabel{
+  position: relative;
+  border: black 1px solid;
+  background-color:black;
+  color: silver;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+  box-shadow: 2px 2px silver ;
+  margin-top: 10px;
+  width:90%;
+  cursor: pointer;
+
+}
+.CloudLabel:hover{
+  border-radius: 8px;
+  background-color:silver;
+  color: black;
+  transform: scale(1.0);
+  box-shadow: 2px 2px lightslategray;
+  padding-left: 2px;
+}
+
