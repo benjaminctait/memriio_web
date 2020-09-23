@@ -3,6 +3,7 @@ import Compressor from 'compressorjs'
 import { unstable_batchedUpdates } from 'react-dom';
 import { format } from "date-fns";
 import { array } from 'prop-types';
+import { cloudDropSearch } from './dropsearch/dropsearch';
 
 function memriiolog(log,data) {
     if(log) console.log(data)       
@@ -777,6 +778,37 @@ export function setUserMemberships (userid,cloudids){
 }
 
 //-------------------------------------------------------------------------------
+
+export function updatedUserClouds ( userid, cloudArrayString){
+
+    memriiolog(true,('Memriio.updateUserClouds : userid ' + userid + ' cloudString ' + cloudArrayString))
+    return new Promise((resolve,reject) =>{
+        fetch('https://memriio-api-0.herokuapp.com/set_webClouds_userid', {
+            method: 'post',headers: {
+                'Content-Type':'application/json'},
+                    body:JSON.stringify({userid:userid, webclouds:cloudArrayString})})
+                    .then(response => response.json())
+                    .then(result => { 
+                        if(result.success){
+                            memriiolog(true,('Memriio.updateUserClouds :server response : ' + result.success))
+                            resolve({
+                                success : true,
+                                data:null
+                            })
+                        }else{
+                            memriiolog(true,('Memriio.updateUserClouds :server response : ' + result.success + ' with ' + result.error)) 
+                            reject({
+                                success:false,
+                                data: null,
+                                err:result.err
+                            })    
+                        }
+                    })     
+    })
+}
+
+//-------------------------------------------------------------------------------
+
 
 export function getUserClouds (userid,callback){
     memriiolog(false,('Memriio.getUserClouds : userid ' + userid ))

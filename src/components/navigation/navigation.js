@@ -1,6 +1,6 @@
 
 import React from 'react';
-import logo from "./memriio_logo.png"
+import logo from "./memrii_logo.png"
 import * as DropSearch from '../dropsearch/dropsearch'
 import * as mem from '../memriioserver'
 import NewMemoryModal from '../memorymodal/newmemorymodal'
@@ -15,14 +15,14 @@ class Navigation extends React.Component{
         this.state ={
             searchwords:'',
             userClouds:null,
-            selectedclouds:null
+            selectedClouds:null
         }
     }
 
     state={
         searchwords:'',
         userClouds:null,
-        selectedclouds:null,
+        selectedClouds:null,
         showPersonalMemoryOptions:false,
         personalMemoryunsharedOnly : false,
         showNewPostModal:false,           
@@ -33,32 +33,44 @@ class Navigation extends React.Component{
 //---------------------------------------------------------------------------------    
     
 onSearchBoxChange = (event) =>{
-    console.log('navigation-onSearchBoxChange : ' + event.target.value)
+    
+    let text = event.target.value.toLowerCase()
     let tmparray = []
+
+    console.log('navigation-onSearchBoxChange : ' + text.split(" "))
     
     if(event.target.value !== ''){
-        tmparray = event.target.value.split(" ")
+        tmparray = text.split(" ")
     }
     this.setState({searchwords:tmparray},this.showMemories )      
 }
 
+
 //---------------------------------------------------------------------------------
 
 handleChangeSearchClouds = (clouds,userid) =>{
-    console.log('changeSearchClouds : ' + mem.stry(clouds.map(cloud => {return parseInt(cloud.value)})));
 
-    this.setState({selectedclouds:clouds},this.showMemories )
+    let cloudstring = ''
+    clouds.map(cloud => {
+        cloudstring += cloud.value + ','
+    })
+    if(cloudstring){cloudstring = cloudstring.slice(0,cloudstring.length-1)}
+    
+    mem.updatedUserClouds(userid,cloudstring)
+
+    this.setState({selectedClouds:clouds},this.showMemories )
 }
 
 //---------------------------------------------------------------------------------
 
 showMemories = () =>{
-    let selected = this.state.selectedclouds
+    let selected = this.state.selectedClouds
     let searchwords = this.state.searchwords
     let cloudids = []
 
+    
     if(selected) cloudids = selected.map(cloud => {return parseInt(cloud.value)})
-    console.log( 'showMemories ' + cloudids + ': cloudids.length ' + cloudids.length)
+    console.log( 'showMemories ', cloudids )
 
     
     if(cloudids.length === 0){
@@ -102,7 +114,7 @@ showMemories = () =>{
     }else{
         if(searchwords.length>0){                                   // clouds + searchwords
             
-            console.log('other clouds only with searchwords [searchwords : cloudsids]' +  searchwords + ' : ' + cloudids );
+            console.log('other clouds only with searchwords : ' +  searchwords + ' cloudids : ' + cloudids );
             mem.getMemories_Words_Clouds(cloudids,searchwords)
            .then(memories => {this.props.loadMemories(memories)}, 
                   error => {this.props.loadMemories(null)})
@@ -134,14 +146,21 @@ render(){
 //---------------------------------------------------------------------------------
 
 loadUserClouds = (userid) => {    
+    let temp =[]
+    
     if(userid) mem.getUserClouds(userid,(clouds => {      
         clouds.push({
             id:0,
             name:'Personal'
         })  
         clouds.reverse()
-        this.setState({userClouds:clouds})
+        clouds.map(cloud => {
+            if(this.props.startingClouds.includes( parseInt(cloud.id) )) temp.push({value : cloud.id, label: cloud.name})
+        })
+        
+        this.setState({ userClouds : clouds , selectedClouds : temp }, this.showMemories() )
     }))
+    
 }
 
 //---------------------------------------------------------------------------------
@@ -150,7 +169,7 @@ handleSignOut = () => {
     this.state={
         searchwords:'',
         userClouds:null,
-        selectedclouds:null,
+        selectedClouds:null,
         showPersonalMemoryOptions:false,
         personalMemoryunsharedOnly : false,          
     }
@@ -194,8 +213,10 @@ handleCancelNewPost = () =>{
 renderStandardNav =() =>{
     const {onRouteChange,userid} = this.props
     let cloudbox = null
-    if(this.state.userClouds){        
-        cloudbox = DropSearch.cloudDropSearch( null,this.state.userClouds,null,true,false , this.handleChangeSearchClouds,userid)
+    let selected = this.state.selectedClouds
+    if(this.state.userClouds){       
+     
+        cloudbox = DropSearch.cloudDropSearch( null,this.state.userClouds,selected,true,false , this.handleChangeSearchClouds,userid)
     }else{
         this.loadUserClouds(userid)
     }

@@ -1,8 +1,7 @@
 import React from 'react';
 import videoPlayImg from '../images/dottedcircleplay.png'
 import videoStopImg from '../images/dottedcircleStop.png'
-import Hls from 'hls.js'
-//import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player';
 import './memoryImageViewer.css';
 
 
@@ -18,31 +17,19 @@ class MemoryFileViewer extends React.Component{
 
 //-----------------------------------------------------------------------------
 
-componentDidUpdate() {
-    const video = this.player;
-    const rurl = this.props.memfile.thumburl
-    const hls = new Hls()
-    hls.xhrSetup = function (xhr, url) { xhr.withCredentials = true }
-    
-    console.log('Image Viewer : DidLoad : ' + rurl );
-
-    hls.loadSource(rurl);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function() { video.play(); });
-}
-
-//-----------------------------------------------------------------------------
-
 handleClick = () =>{
     console.log('image clicked')
     
 }
+
+//-----------------------------------------------------------------------------
 
 stopVideo = () => {
     this.setState({videoPlaying:false})
     
 }
 //-----------------------------------------------------------------------------
+
 playVideo = () => {
     this.setState({videoPlaying:true})
 }
@@ -164,14 +151,19 @@ handleVideoReady = () => {
 //-----------------------------------------------------------------------------
 
 renderVideo = () =>{
-    console.log('rendervideo : ' + JSON.stringify(this.props.memfile.thumburl));
+    
 
     return (
-        <video
-          className="videoCanvas"
-          ref={player => (this.player = player)}
-          autoPlay={true}
-        />
+        <div className='player-wrapper'>
+            <ReactPlayer
+            className   =   "react-player"
+            url         =   { this.props.memfile.thumburl}
+            ref         =   { player => (this.player = player)}
+            playing     =    { this.state.videoPlaying }
+            width       =   '100%'
+            
+            />
+      </div>
   )
 }
 
@@ -189,10 +181,10 @@ render(){
         return ( alternateRenderer() )
     } else {
         if(this.state.fileType === 'image') {
-            console.log('FILEVIEWER file is image');
+            
             visibleContent = this.renderImageThumb()}
         else if (this.state.fileType === 'video'){
-            console.log('FILEVIEWER file is video');
+            
             visibleContent = this.renderVideo() 
         }else{
             visibleContent = null

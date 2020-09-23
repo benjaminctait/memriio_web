@@ -4,6 +4,7 @@ import CardCollection from './components/cardcollection/cardcollection.js';
 import Signin from './components/signin/signin.js';
 import Register from './components/register/register.js';
 import Admin from './components/admin/admin.js'
+import * as mem from './components/memriioserver.js'
 import './App.css';
 
 
@@ -15,6 +16,7 @@ class App extends React.Component {
       route: 'signin',
       isSignedIn: false,
       activeMemory:null,
+      cloudSelection:[],
       user:{
         id:'',
         name:'',
@@ -37,26 +39,27 @@ class App extends React.Component {
 
   loadUser = (data) => {
     
-    this.state.user.userid = data.userid
-    this.state.user.firstname = data.firstname
-    this.state.user.lastname = data.lastname
-    this.state.user.email = data.email
-    this.state.user.joined = data.joined
-   
-    fetch('https://memriio-api-0.herokuapp.com/get_memories_userid', {
-      method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body:JSON.stringify({
-          userid:data.userid
-          })
-        })
-          .then(response => response.json())
-          .then(memories=>{
-              if(memories.success) this.loadMemories(memories.data)
-          })
+    this.setState({ user : {  userid    : data.userid, 
+                              firstname : data.firstname,
+                              lastname  : data.lastname,
+                              email     : data.email,
+                              joined    : data.joined,
+                              cloudSelection : this.extractSelectedClouds(data.webclouds)
+                            }
+      })
+      
   } 
 //---------------------------------------------------------------------------------
 
+extractSelectedClouds = (webClouds) => {
+  let tempArray = []
+  if(webClouds){
+    webClouds.split(',').map(cid => {tempArray.push(parseInt(cid))})
+  }
+  return tempArray
+}
+
+//---------------------------------------------------------------------------------
 
   handleNewMemory = (memory) => {
     console.log('handleNewMemory : ' + JSON.stringify(memory));
@@ -122,22 +125,24 @@ render() {
   
     let routeName = this.state.route
     let content = null
-    console.log('<Navigation> userid ' + this.state.user.userid);
+    console.log('Navigation.render.user ' , this.state.user);
+    
     
     let nav = <Navigation 
-                onRouteChange={this.onRouteChange} 
-                userSignedin={this.userSignedin}
-                loadMemories={this.loadMemories}     
-                onNewMemory = {this.handleNewMemory}      
-                currentRoute={this.state.route}
-                userid={this.state.user.userid}
+                onRouteChange   = { this.onRouteChange    }   
+                userSignedin    = { this.userSignedin       }
+                loadMemories    = { this.loadMemories       }     
+                onNewMemory     = { this.handleNewMemory    }     
+                startingClouds  = { this.state.user.cloudSelection }    
+                currentRoute    = { this.state.route        }
+                userid          = { this.state.user.userid  }
               />
 
     if(routeName === 'home'){
       content = <CardCollection 
-              memories={this.state.searchResult.memories} 
-              userid={this.state.user.userid} 
-              onEditMemory={this.handleEditMemory}/>
+              memories      = { this.state.searchResult.memories } 
+              userid        = { this.state.user.userid } 
+              onEditMemory  = { this.handleEditMemory  }/>
               
     }else if(routeName === 'signin'){
       content = <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />

@@ -59,19 +59,14 @@ export function peopleDropSearch ( cRect, people ,callBack){
 
 //-------------------------------------------------------------------
 
-export function cloudDropSearch ( cRect,clouds, selected,showmulti,keepInList,callBack,userid){
+export function cloudDropSearch ( cRect , clouds , selected , showmulti , keepInList , callBack , userid ){
   userid = userid || 0
   
   let cloudnames = clouds.map((cloud,idx) => {
       return {value : cloud.id, label: cloud.name}})
   
-  let selectedValues = []
-  if (selected){
-     selected.map((cloud ) =>{
-      selectedValues.push({value : cloud.id, label: cloud.name})
-    })
-  }
- 
+  let selectedValues = selected
+  
   let cStyle = null
   if(cRect){
     cStyle = { position:'fixed', top:cRect.y, width:cRect.width}
@@ -99,9 +94,7 @@ export function cloudDropSearch ( cRect,clouds, selected,showmulti,keepInList,ca
               if(callBack) callBack(items,userid)
           }
         }
-
-        onblu
-        
+       
         //------------
 
         itemRenderer = {({ item, itemIndex, props, state, methods }) => (

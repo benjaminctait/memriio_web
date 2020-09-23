@@ -18,7 +18,7 @@ import MemoryFileViewer from '../memoryviewer/memoryImageViewer'
 import * as mem from '../memriioserver'
 import * as DropSearch from '../dropsearch/dropsearch'
 
-import WordExctractor from 'keyword-extractor'
+import WordExtractor from 'keyword-extractor'
 import { Container, Draggable} from 'react-smooth-dnd'
 import Dropzone,{useDropzone} from 'react-dropzone'
 
@@ -634,7 +634,7 @@ handleStoryChange       = (event) => {
 addToSearchWords = (textContent) =>{
   let addarray = this.state.searchWords
   let addarray2 = []  
-  let words = WordExctractor.extract(textContent,
+  let words = WordExtractor.extract(textContent,
                                       {
                                           language:"english",
                                           remove_digits: true,
@@ -846,7 +846,7 @@ handleDropfiles = async (acceptedFiles) =>{
 handleDeleteMemory = ( ) => {
  
  this.props.onDeleteMemory(this.props.memory)
-
+ this.onHide()
 }
 
 //------------------------------------------------------------------------
@@ -919,13 +919,13 @@ prepAndUploadVideoFile = (file, isHero, uniqueID)=>{
   let originalfile    = commonfileName + '-' + uniqueID + '-stream'    + '.' + ext
   
   let memfile = {
-    id        : 0,
-    memid     : this.state.memid,
-    fileurl   : '',     // this will be the original
-    ishero    : false,
-    fileext   : ext,    
-    thumburl  : '',    // this will be the transcoded version
-    thumbext  : '',
+    id          : 0,
+    memid       : this.state.memid,
+    fileurl     : '',     // this will be the original
+    ishero      : false,
+    fileext     : ext,    
+    thumburl    : '',    // this will be the transcoded version
+    thumbext    : '',
   }
   
   return new Promise((resolve,reject) =>{
@@ -992,6 +992,8 @@ goBack = (e) => {
     this.setState({activefile:this.state.memfiles[this.state.memfileIndex]})
   }
 }
+
+//------------------------------------------------------------------------
 
 goForward = (e) => {
   if(this.state.memfiles)

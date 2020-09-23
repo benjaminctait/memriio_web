@@ -235,7 +235,6 @@ componentDidUpdate = (prevProps,prevState) =>{
 
           console.log('handleUploadMemory : file ' + memfile.name + ' is a video');
           Promises.push( this.prepAndUploadVideoFile ( memfile,memfile.isHero,idx ) )
-
         }
 
       })        
@@ -893,8 +892,8 @@ prepAndUploadVideoFile = (mfile, isHero, uniqueID)=>{
   let commonfileName = this.state.user.userid + '-' + this.state.memid + '-' + Date.now()
   let ext = mem.getExtension(mfile.file.name)
 
-  let vFolder = commonfileName + '-' + uniqueID
-  let originalfile    = commonfileName + '-' + uniqueID + '-stream'    + '.' + ext
+  let vFolder       = commonfileName + '-' + uniqueID
+  let originalfile  = commonfileName + '-' + uniqueID + '-stream'    + '.' + ext
   
   let memfile = {
     id        : 0,
