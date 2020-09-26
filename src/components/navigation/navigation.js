@@ -244,12 +244,12 @@ renderStandardNav =() =>{
                         title="New">New</a>
                 </li>
 
-                <li className='floatRight'>
+                {/* <li className='floatRight'>
                     <a className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2" 
                         onClick={this.handleRunTest}
                         href="#newpost" 
                         title="New">Test</a>
-                </li>
+                </li> */}
 
 
                 <li className='floatRight width50'>

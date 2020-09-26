@@ -73,11 +73,10 @@ export class ImageLabel extends React.Component{
         isblured:false
         
     }
-
     
-    handleBlur       = () => {if(this.state.isblured) this.setState({isblured:false })}
-    handleFocus      = () => {if(!this.state.isblured) this.setState({ isblured:true })}
-    handleBadgeClick = () => {if(this.props.onBadgeClick){this.props.onBadgeClick(this.props.data)}}
+    handleBlur       = () => {if(this.state.isblured    )    this.setState({isblured:false })}
+    handleFocus      = () => {if(!this.state.isblured   )    this.setState({ isblured:true })}
+    handleBadgeClick = () => {if(this.props.onBadgeClick)   {this.props.onBadgeClick(this.props.data)}}
 
     onLabelClick    = (evnt) => {
         if(this.props.onClick){

@@ -1,6 +1,7 @@
 import React from 'react';
 import tag from '../images/tag.png'
-import cloudIMG from '../images/cloud.png'
+import cloudImg from '../images/cloud.png'
+import './dropsearch.css'
 
 import {ImageLabel, CloudLabel} from '../buttons/buttons'
 import SelectDropDown from 'react-dropdown-select'
@@ -99,13 +100,15 @@ export function cloudDropSearch ( cRect , clouds , selected , showmulti , keepIn
 
         itemRenderer = {({ item, itemIndex, props, state, methods }) => (
             
-          <ImageLabel 
-            
-            key={'i' + itemIndex} 
-            onClick={() => methods.addItem(item)} 
-            leftImg = {tag}
-            label = {item.label}
-          />
+          <div className = 'wordListItem'>
+            <ImageLabel 
+              
+              key={'i' + itemIndex} 
+              onClick={() => methods.addItem(item)} 
+              leftImg = {cloudImg}
+              label = {item.label}
+            />
+          </div>
         )}
         
     />
