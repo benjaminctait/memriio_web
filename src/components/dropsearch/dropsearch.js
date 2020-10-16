@@ -66,7 +66,8 @@ export function cloudDropSearch ( cRect , clouds , selected , showmulti , keepIn
   let cloudnames = clouds.map((cloud,idx) => {
       return {value : cloud.id, label: cloud.name}})
   
-  let selectedValues = selected
+  let selectedValues = selected.map((cloud,idx) => {
+    return {value : cloud.id, label: cloud.name}})
   
   let cStyle = null
   if(cRect){

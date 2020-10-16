@@ -5,6 +5,9 @@ import { format } from "date-fns";
 import { array } from 'prop-types';
 import { cloudDropSearch } from './dropsearch/dropsearch';
 
+
+//-------------------------------------------------------------------------------
+
 function memriiolog(log,data) {
     if(log) console.log(data)       
 }
@@ -1389,4 +1392,14 @@ export function isNonEmptyArray (arrayObj) {
             }
         }else return false
     }else return false
+}
+
+//---------------------------
+
+export function shrinkCardDescription(description){
+    if(description && description.length > 30){
+        return description.substr(0,30)+'...'
+    }else{
+        return description
+    }
 }

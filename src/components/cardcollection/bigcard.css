@@ -1,0 +1,97 @@
+
+.bigcard {
+    max-width: 544px; 
+    min-width: 544px; 
+    height: 512px;
+    border: solid 1px,whitesmoke;
+    cursor: pointer;
+    box-shadow:4px 4px 8px 0px rgba( 0, 0, 0, 0.2 );
+    border-radius: 8px;
+    margin:1rem;
+    background-color: var(--near-white);
+}
+
+.bigcardimg {
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.controlBox {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    min-width: 100%;
+    max-height: 24px;
+    bottom: 5px;
+  
+}
+.controlBackground{
+    position: absolute;
+    width: 100%;
+    min-height: 24px;
+    background-color:lightslategray;
+    opacity: .5;
+    z-index: 0;
+    
+}
+.controlFont{
+    
+    font-size: 1rem;
+    color: black;    
+    margin-left: 5px;
+    margin-right: 5px;
+    z-index: 1;
+}
+
+.bigCardImageContainer{
+    height:100%
+}
+
+
+.bottomleft {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+   
+}
+
+.bottomright {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;   
+}
+
+.bottomcenter {
+    position: absolute;
+    bottom: 12px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+      
+}
+
+.middlecenter {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:auto;
+    margin-right:auto;
+      
+}
+
+.lowerthird {
+    position: absolute;
+    bottom: 20px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;      
+}

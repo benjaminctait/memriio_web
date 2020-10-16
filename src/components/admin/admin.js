@@ -297,6 +297,7 @@ getUserMemberships = ( userid ) =>{
 //---------------------------------------------------------------
 
 initColumns = () =>{
+  
   return(
     [
       {
@@ -361,6 +362,7 @@ initColumns = () =>{
         title: () => 'Clouds',
         value: (row, { focus }) => {
           let selected = this.getUserMemberships(row.userid)                
+          
           return ( DropSearch.cloudDropSearch(null,this.state.clouds,selected,true,false ,this.handleUserUpdateClouds,row.userid) )
           },
         width:24,

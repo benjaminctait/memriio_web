@@ -16,12 +16,14 @@ class App extends React.Component {
       route: 'signin',
       isSignedIn: false,
       activeMemory:null,
-      cloudSelection:[],
+      cloudsLoaded:false,
+      
       user:{
         id:'',
         name:'',
         email:'',
-        joined:''
+        joined:'',
+        cloudSelection:[],
       },
       searchResult:{
         memories:[]
@@ -47,7 +49,7 @@ class App extends React.Component {
                               cloudSelection : this.extractSelectedClouds(data.webclouds)
                             }
       })
-      
+    console.log('loaduser ' , this.state.user.cloudSelection);
   } 
 //---------------------------------------------------------------------------------
 
@@ -86,11 +88,35 @@ extractSelectedClouds = (webClouds) => {
 
 //---------------------------------------------------------------------------------
 
+setCloudsLoaded =(value) => {
+
+  this.state.cloudsLoaded = value
+  
+}
+
+
+//---------------------------------------------------------------------------------
+  resetUser = () =>{
+    this.setState({ user : {  userid    : 0, 
+                              firstname : '',
+                              lastname  : '',
+                              email     : '',
+                              joined    : '',
+                              cloudSelection : null
+                          },
+                        
+                    }
+                  )
+  }
+
+//---------------------------------------------------------------------------------
+
   onRouteChange = (route) =>{
    
     console.log('app.onRouteChange : route = ' + route);
     
     if(route === 'signin'){
+      this.resetUser()
       this.setState({
         searchResult:{memories:[]},
         route:route, 
@@ -125,17 +151,19 @@ render() {
   
     let routeName = this.state.route
     let content = null
-    console.log('Navigation.render.user ' , this.state.user);
+    console.log('app.render.user ' , this.state.user, this.state.user.cloudSelection);
     
     
     let nav = <Navigation 
-                onRouteChange   = { this.onRouteChange    }   
+                onRouteChange   = { this.onRouteChange      }   
                 userSignedin    = { this.userSignedin       }
                 loadMemories    = { this.loadMemories       }     
                 onNewMemory     = { this.handleNewMemory    }     
                 startingClouds  = { this.state.user.cloudSelection }    
                 currentRoute    = { this.state.route        }
                 userid          = { this.state.user.userid  }
+                cloudsLoaded    = { this.state.cloudsLoaded }
+                setCloudsLoaded = { this.setCloudsLoaded    }
               />
 
     if(routeName === 'home'){
@@ -145,7 +173,10 @@ render() {
               onEditMemory  = { this.handleEditMemory  }/>
               
     }else if(routeName === 'signin'){
-      content = <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+      content = <Signin 
+                    loadUser={this.loadUser} 
+                    onRouteChange={this.onRouteChange} 
+                    setCloudsLoaded={this.setCloudsLoaded} />
 
     }else if (routeName === 'admin'){
       console.log('app.render : route = ' + routeName);

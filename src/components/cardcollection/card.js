@@ -67,7 +67,7 @@ loadFiles = (memfiles) => {
         }
         newMemFiles.push(memfile)
     }) 
-    this.setState({memfiles:memfiles})
+    this.setState({memfiles:newMemFiles})
 }
 
 //-----------------------------------------------------------------------------
@@ -103,17 +103,17 @@ renderFileVIew = () => {
                     id={'memcard'+this.props.memory.memid}
                     onClick={this.handleClick}
                 >
-
-                    {fileview}
-                    <div>
-                        <h3>{this.props.memory.title}</h3>
-                        <p className="f6 lh-copy measure mt2 mid-gray">{this.props.memory.description}</p>
-                        <div className="controlBox">
-                            <a className="link dim controlFont " onClick={this.handleMoreClick  } >More</a>
-                            <a className="link dim controlFont " onClick={this.handleEditCard } >[..]</a>
-                        </div>
+                {fileview}
+                <div>
+                    <h3 className="mb2 mt2 ">{this.props.memory.title}</h3>
+                    <p className="f6 lh-copy measure mt2 mid-gray">{
+                            mem.shrinkCardDescription(this.props.memory.description)
+                        }</p>
+                    <div className="controlBox">
+                        <a className="link grow dim controlFont " onClick={this.handleMoreClick  } >More</a>
                     </div>
                 </div>
+            </div>
             )
     }
 
@@ -146,16 +146,22 @@ getHeroFile = () => {
 
 loadFiles = (memfiles) => {
 
+    let newMemFiles = []
     memfiles.forEach(memfile => {
-        console.log('memfile : ' + memfile);
-        
+       
         if(memfile.fileext == 'mp4'){
             let parts = memfile.thumburl.split('/')
-            let fname = parts[parts.length-1]
-            mem.getDownloadSignedurl(fname).then( surl => {memfile.thumburl = surl})
+            let fname = parts[parts.length-2]+ '/' + parts[parts.length-1]
+            console.log('base card : loadFiles : ' + fname );
+            mem.getDownloadSignedurl(fname).then( surl => 
+                {
+                    console.log('base card : loadFiles memfile.thumbnail : ' + surl );
+                    memfile.thumburl = surl
+                })
         }
-    })
-    this.setState({memfiles:memfiles})
+        newMemFiles.push(memfile)
+    }) 
+    this.setState({memfiles:newMemFiles})
 }
 
 //-----------------------------------------------------------------------------
@@ -179,19 +185,16 @@ handleMoreClick =() =>{
 //-----------------------------------------------------------------------------
 
 renderFileVIew = () => {
-
-    if(this.state.memfiles) {
+    if(this.state.memfiles){
         let memf = this.getHeroFile()
-        //return <img alt='memory' src={memf.thumburl} className='shortcardimg'/>
-
         return (
-            
-            <MemoryFileViewer 
-                memfile={memf}
-                thumbStyleClass={'Xshortcardimg'}
-                fileStyleClass={'Xshortcardimg'}
-            />
-         
+            <div className = {'shortcardimg'}>
+                <MemoryFileViewer 
+                    memfile={memf}
+                    thumbStyleClass={'Xbasecardimg'}
+                    fileStyleClass={'Xbasecardimg'}
+                />
+            </div>
         )
     }
 }
@@ -211,7 +214,7 @@ renderFileVIew = () => {
                 <div className="controlBox">
                     
                     <a className="link dim controlFont" onClick={this.handleMoreClick  }>More</a>
-                    <a className="link dim controlFont" onClick={this.handleEditCard } >[..]</a>
+                    
                     <div className='controlBackground'></div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ import cloudIMG from '../images/cloud.png'
 import MemoryFileViewer from '../memoryviewer/memoryImageViewer'
 import * as mem from '../memriioserver'
 import * as DropSearch from '../dropsearch/dropsearch'
+import * as ur from '../userrolls'
 
 import WordExtractor from 'keyword-extractor'
 import { Container, Draggable} from 'react-smooth-dnd'
@@ -75,11 +76,11 @@ class MemoryModal extends React.Component{
         
 
         this.populateMemoryFiles ( this.props.memfiles )
-        mem.getUser              ( this.props.memory.userid,(author => { this.setState({author:author})}))
-        mem.getTaggedPeople      ( this.props.memory.memid,(people => { this.setState({taggedPeople:people})}))
-        mem.getMemoryClouds      ( this.props.memory.memid,(clouds => { this.populateCloudInfo(clouds)}))
-        mem.getMemorySearchWords ( this.props.memory.memid,(words  => { this.populateSearchWords(words)}))
-        mem.getUserClouds        ( this.props.memory.userid,(clouds => { this.setState({userClouds:clouds})}))
+        mem.getUser              ( this.props.memory.userid,( author => { this.setState({author:author})}))
+        mem.getTaggedPeople      ( this.props.memory.memid, ( people => { this.setState({taggedPeople:people})}))
+        mem.getMemoryClouds      ( this.props.memory.memid, ( clouds => { this.populateCloudInfo(clouds)}))
+        mem.getMemorySearchWords ( this.props.memory.memid, ( words  => { this.populateSearchWords(words)}))
+        mem.getUserClouds        ( this.props.memory.userid,( clouds => { this.setState({userClouds:clouds})}))
         
       }      
     }
@@ -565,6 +566,7 @@ renderImageZone =()=>{
           )
         }
       </Dropzone>
+      
     )
   }else{
     return (
@@ -702,20 +704,23 @@ renderStoryZone = () =>{
 renderCornerControls =() =>{
   let editBtn = null
   let deleteBtn = null
-  if(this.userIsAuthorisedToEdit()){
+  
+  if( ur.canEditMemories( this.props.activeUserid )  ){
     editBtn=
       <img  
       className='closeBtn'                   
       src = {edit}
       onClick={this.toggleEditMode} />
-
+  }
+  
+  if( ur.canDeleteMemories( this.props.activeUserid )) {  
     deleteBtn=
     <img  
     className='closeBtn'                   
     src = {trash}
     onClick={this.handleDeleteMemory} />
-    
   }
+  
   return (
     <div className='footer'>    
       {deleteBtn}   

@@ -3,20 +3,15 @@ import React from 'react';
 import logo from "./memrii_logo.png"
 import * as DropSearch from '../dropsearch/dropsearch'
 import * as mem from '../memriioserver'
+import * as ur from '../userrolls'
 import NewMemoryModal from '../memorymodal/newmemorymodal'
 import './navigation.css'
-
 
 
 class Navigation extends React.Component{
 
     constructor(props){
         super(props);
-        this.state ={
-            searchwords:'',
-            userClouds:null,
-            selectedClouds:null
-        }
     }
 
     state={
@@ -25,13 +20,40 @@ class Navigation extends React.Component{
         selectedClouds:null,
         showPersonalMemoryOptions:false,
         personalMemoryunsharedOnly : false,
-        showNewPostModal:false,           
-        
+        showNewPostModal:false, 
     }
 
 
 //---------------------------------------------------------------------------------    
+
+handleSignOut = () => {
     
+    this.state={
+        searchwords:'',
+        userClouds:null,
+        selectedClouds:null,
+        showPersonalMemoryOptions:false,
+        personalMemoryunsharedOnly : false,          
+    }
+    console.log('handleSignout.userClouds ',this.state);
+    this.props.setCloudsLoaded(false)
+    this.props.onRouteChange('signin')
+}
+
+//---------------------------------------------------------------------------------
+
+componentDidMount = ()=>{
+    console.log('NAV.mount');
+    console.log('');
+}
+
+componentDidUpdate = ()=>{
+    console.log('NAV.update : ',this.props.user);
+    console.log('');
+}
+
+//---------------------------------------------------------------------------------
+
 onSearchBoxChange = (event) =>{
     
     let text = event.target.value.toLowerCase()
@@ -64,6 +86,7 @@ handleChangeSearchClouds = (clouds,userid) =>{
 //---------------------------------------------------------------------------------
 
 showMemories = () =>{
+   
     let selected = this.state.selectedClouds
     let searchwords = this.state.searchwords
     let cloudids = []
@@ -133,52 +156,50 @@ showMemories = () =>{
 //---------------------------------------------------------------------------------
 
 render(){
-    const {userSignedin,currentRoute} = this.props
     
+    const {userSignedin,currentRoute} = this.props
+    console.log('Nav.render ',this.state.userClouds);
     if(userSignedin()){
-        if      (currentRoute === 'home')           { return ( this.renderStandardNav())
+        if      (currentRoute === 'home')           { return ( this.renderStandardNav() )
         }else if(currentRoute === 'displayMemory')  { return ( null ) 
-        }else if(currentRoute === 'admin')          { return ( this.renderAdminNav()) }
+        }else if(currentRoute === 'admin')          { return ( this.renderAdminNav()    ) }
             
-    }else{ return ( this.renderSignInNav())}
+    }else{ return ( this.renderSignInNav() )}
 }
 
 //---------------------------------------------------------------------------------
 
-loadUserClouds = (userid) => {    
+loadUserClouds = (userid) => { 
+
     let temp =[]
-    
-    if(userid) mem.getUserClouds(userid,(clouds => {      
+    console.log('loadUserClouds ', userid );
+    if(userid) mem.getUserClouds(userid,(clouds => {   
+           
         clouds.push({
             id:0,
             name:'Personal'
         })  
         clouds.reverse()
         clouds.map(cloud => {
-            if(this.props.startingClouds.includes( parseInt(cloud.id) )) temp.push({value : cloud.id, label: cloud.name})
+            if(this.props.startingClouds.includes( parseInt(cloud.id) )) temp.push({value : cloud.id, name: cloud.name})
         })
         
-        this.setState({ userClouds : clouds , selectedClouds : temp }, this.showMemories() )
+        this.setState({ userClouds : clouds , selectedClouds : temp }, ()=>{
+                this.props.setCloudsLoaded(true)    
+                this.showMemories()
+            }) 
     }))
     
 }
 
-//---------------------------------------------------------------------------------
 
-handleSignOut = () => {
-    this.state={
-        searchwords:'',
-        userClouds:null,
-        selectedClouds:null,
-        showPersonalMemoryOptions:false,
-        personalMemoryunsharedOnly : false,          
-    }
-    this.props.onRouteChange('signin')
-}
+//---------------------------------------------------------------------------------
 
 handleAdminClick = () =>{
     this.props.onRouteChange('admin')
 }
+
+//---------------------------------------------------------------------------------
 
 handleRunTest = () => {
     console.log('this does nothing anymore')
@@ -211,62 +232,69 @@ handleCancelNewPost = () =>{
 //---------------------------------------------------------------------------------
 
 renderStandardNav =() =>{
+ 
     const {onRouteChange,userid} = this.props
     let cloudbox = null
+    let adminButton = null
     let selected = this.state.selectedClouds
-    if(this.state.userClouds){       
-     
+
+    if(ur.showAdminOnNavBar(userid))
+    {
+        adminButton = 
+        <li className='stdListItem'>
+            <a className="linkText" 
+                onClick={this.handleAdminClick}
+                href="#admin" 
+                title="Administration">Admin</a>
+        </li>
+    }
+    console.log('renderStandardNav.userClouds ',this.state.userClouds);
+    if(this.props.cloudsLoaded){       
+        
         cloudbox = DropSearch.cloudDropSearch( null,this.state.userClouds,selected,true,false , this.handleChangeSearchClouds,userid)
     }else{
         this.loadUserClouds(userid)
     }
     
     return(
-        <nav className='navBar'>
-            <ul>
-                <li className='floatRight'>
-                    <a  onClick={this.handleSignOut}
-                        className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2" 
-                        href="#" 
-                        title="Log Out">Sign Out</a>
+        <nav >
+            <ul className='navBar' >
+
+                <li className='stdListItem'>
+                    <img src={logo} className="logo" alt="memriio"></img>
                 </li>
 
-                <li className='floatRight'>
-                    <a className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2" 
-                        onClick={this.handleAdminClick}
-                        href="#admin" 
-                        title="Administration">Admin</a>
+                <li className='flexitem'>
+                    {cloudbox}
+                </li>     
+
+                <li className='flexitem'>
+                    <input 
+                        onChange ={this.onSearchBoxChange}
+                        className = 'searchBox'
+                        type="text" 
+                        placeholder='search...'
+                        aria-describedby="name-desc"></input>
                 </li>
-                <li className='floatRight'>
-                    <a className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2" 
+
+                <li className='stdListItem'>
+                    <a className="linkText" 
                         onClick={this.handleShowNewMemory}
                         href="#newpost" 
                         title="New">New</a>
                 </li>
 
-                {/* <li className='floatRight'>
-                    <a className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2" 
-                        onClick={this.handleRunTest}
-                        href="#newpost" 
-                        title="New">Test</a>
-                </li> */}
+                {adminButton}
 
-
-                <li className='floatRight width50'>
-                    <input 
-                        onChange ={this.onSearchBoxChange}
-                        className = 'searchBox'
-                        type="text" 
-                        aria-describedby="name-desc"></input>
+                <li className='stdListItem floatRight'>
+                    <a  onClick={this.handleSignOut}
+                        className="linkText" 
+                        href="#" 
+                        title="Log Out">Sign Out</a>
                 </li>
-
-                <li className='floatRight width50'>
-                    {cloudbox}
-                </li>                
+                          
                 
-                <li className='floatLeft'>
-                    <img src={logo} className="logo" alt="memriio"></img>
-                </li>
+                
             </ul>
             <NewMemoryModal 
                 key                 = { 'memmodal' + 42}
@@ -286,20 +314,24 @@ renderStandardNav =() =>{
 //---------------------------------------------------------------------------------
 
 renderSignInNav = () => {
+ 
     const onRouteChange = this.props.onRouteChange
     return (
-        <nav className="navBar ">
-            <div className="logocell" href="#" title="Home">
-                <img src={logo} className="logo" alt="memriio"></img>
-            </div>
-            <div className="dtc v-mid w-75 tr">
+
+        <nav className='navBar'>
+            <ul>
+                <li className='floatRight'>
+                    <a  onClick={()=>onRouteChange ("signin")}
+                            className="link dim dark-gray f6 f4-ns dib" 
+                            href="#" 
+                            title="Log ">Sign In</a>
+                </li>
                 
-                <a  onClick={()=>onRouteChange ("signin")}
-                    className="link dim dark-gray f6 f4-ns dib" 
-                    href="#" 
-                    title="Log ">Sign In</a>
-                
-            </div>
+                <li className='floatLeft'>
+                    <img src={logo} className="logo" alt="memriio"></img>
+                </li>
+            </ul>
+        
         </nav>
     )
 }

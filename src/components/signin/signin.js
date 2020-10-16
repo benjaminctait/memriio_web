@@ -33,7 +33,9 @@ class Signin extends React.Component {
                 .then(user => {
                                     
                  if(user.userid){
+                    console.log('signin.onSubmitSignIn ', user); 
                     this.props.loadUser(user)
+                    this.props.setCloudsLoaded(false)
                     this.props.onRouteChange('home')
                  }else{
                     this.setState({signInEmail:'',signInPassword:''})   
@@ -46,16 +48,16 @@ class Signin extends React.Component {
         return (
             
             <article className="section">
-                <main className="pa4 black-80">
+                <main className="pa2 black-80">
                     <div className="measure center">
-                        <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                        <fieldset id="sign_up" className="ba b--transparent ph10 mh0">
                         <legend className="f4 fw6 ph0 mh0">Sign In</legend>
                         <div className="mt3">
                             <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                             <input 
                                 value= {this.state.signInEmail}
                                 onChange={this.onEmailChange}
-                                className="pa2 input-reset ba bg-transparent hover-bg-black hover-blue w-100" 
+                                className="pa2 input-reset ba bg-transparent hover-bg-grey hover-black w-100" 
                                 type="email" 
                                 name="email-address"  
                                 id="email-address" />
@@ -65,7 +67,7 @@ class Signin extends React.Component {
                             <input 
                                 value={this.state.signInPassword}
                                 onChange={this.onPasswordChange}
-                                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-blue w-100" 
+                                className="b pa2 input-reset ba bg-transparent hover-bg-grey hover-black w-100" 
                                 type="password" 
                                 name="password"  
                                 id="password"/>
