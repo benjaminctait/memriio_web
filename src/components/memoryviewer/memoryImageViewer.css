@@ -51,12 +51,19 @@
 
 .player-wrapper {
   position: relative;
-  
+  height: 100%;
 }
  
 .react-player {
   position: absolute;
   top: 0;
   left: 0;
-  height: 460px;
+  
+  
+}
+
+.react-player video {
+  position: relative;
+  object-fit: cover;
+  height: 100%;
 }

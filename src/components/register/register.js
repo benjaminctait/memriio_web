@@ -68,7 +68,7 @@ class Register extends React.Component{
                                 <label className="db fw6 lh-copy f6" htmlFor="name">First Name</label>
                                 <input 
                                     onChange={this.onNewUserFirstNameChange}
-                                    className="pa2 input-reset black ba bg-transparent hover-bg-black  w-100" 
+                                    className="pa2 input-reset black ba bg-transparent hover-bg-grey hover-black w-100" 
                                     type="text" 
                                     name="firstname" 
                                     id="firstname" />
@@ -77,7 +77,7 @@ class Register extends React.Component{
                                 <label className="db fw6 lh-copy f6" htmlFor="name">Last Name</label>
                                 <input 
                                     onChange={this.onNewUserLastNameChange}
-                                    className="pa2 input-reset black ba bg-transparent hover-bg-black  w-100" 
+                                    className="pa2 input-reset black ba bg-transparent hover-bg-grey hover-black  w-100" 
                                     type="text" 
                                     name="lastname" 
                                     id="lastname" />
@@ -86,7 +86,7 @@ class Register extends React.Component{
                                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                                 <input 
                                     onChange={this.onNewUserEmailChange}
-                                    className="pa2 input-reset ba bg-transparent hover-bg-black  w-100" 
+                                    className="pa2 input-reset ba bg-transparent hover-bg-grey hover-black  w-100" 
                                     type="email" 
                                     name="email-address"  
                                     id="email-address" />
@@ -96,7 +96,7 @@ class Register extends React.Component{
                                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                 <input 
                                     onChange={this.onNewUserPasswordChange}
-                                    className="b pa2 input-reset ba bg-transparent hover-bg-black w-100" 
+                                    className="b pa2 input-reset ba bg-transparent hover-bg-grey hover-black w-100" 
                                     type="password" 
                                     name="password"  
                                     id="password"/>

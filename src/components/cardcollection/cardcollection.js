@@ -1,12 +1,11 @@
 import React from 'react';
 import {BaseCard,ShortCard} from './card'
+import {BigCard} from './bigcard'
 import MemoryModal from '../memorymodal/memorymodal'
 import Masonry from 'react-masonry-component';
 import * as mem from '../memriioserver'
 
 import './cardcollection.css'
-
-
 
 
 class CardCollection extends React.Component{
@@ -24,10 +23,8 @@ class CardCollection extends React.Component{
         memories:null,
         activeUser:null,
         showMemoryModal:false,
-        activeMemory:null,       
-        
+        activeMemory:null,    
     }
-
 
 componentDidUpdate = (prevProps,prevState) =>{
     if( prevProps.memories !== this.props.memories){
@@ -88,7 +85,7 @@ console.log('cardCollection.card clicked - memid : ' + memid);
                                 >                          
                                 {  this.state.memories.map(memory => {
                                     let ukey = 'memcard' + memory.memid                                    
-                                    if(memory.cardtype == 0){
+                                    if(memory.cardtype === 0){
                                         return (
                                             <BaseCard
                                                 key={ukey} 
@@ -97,7 +94,7 @@ console.log('cardCollection.card clicked - memid : ' + memid);
                                                 onShowModal = {this.onShowModal}
                                                 onCardClick = {this.onCardClick}
                                                 />)
-                                    }else if (memory.cardtype == 1){
+                                    }else if (memory.cardtype === 1){
                                         return (
                                             <ShortCard
                                                 key={ukey} 
@@ -106,7 +103,16 @@ console.log('cardCollection.card clicked - memid : ' + memid);
                                                 onShowModal = {this.onShowModal}
                                                 onCardClick = {this.onCardClick}
                                             />)
-                                    } 
+                                    }else if (memory.cardtype === 2){
+                                        return (
+                                            <BigCard
+                                                key={ukey} 
+                                                memory={memory}
+                                                onEdit = {this.onEditMemory}
+                                                onShowModal = {this.onShowModal}
+                                                onCardClick = {this.onCardClick}
+                                            />)
+                                    }  
                                     })                                   
                                 }                             
                             </Masonry>       
@@ -115,12 +121,13 @@ console.log('cardCollection.card clicked - memid : ' + memid);
                     <div class='col-right-0' id="col3"></div>
                 </div>
                 <MemoryModal 
-                    key         = { 'memmodal' + 42}
-                    memory      = { this.state.activeMemory}
-                    memfiles    = { this.state.memfiles}
-                    show        = { this.state.showMemoryModal}
-                    onHideModal = { this.onShowModal}
-                    onDeleteMemory = { this.onDeleteMemory } 
+                    key             = { 'memmodal' + 42             }
+                    activeUserid    = { this.state.activeUser       }
+                    memory          = { this.state.activeMemory     }
+                    memfiles        = { this.state.memfiles         }
+                    show            = { this.state.showMemoryModal  }
+                    onHideModal     = { this.onShowModal            }
+                    onDeleteMemory  = { this.onDeleteMemory         }     
                 > 
                 </MemoryModal>           
             </div>        

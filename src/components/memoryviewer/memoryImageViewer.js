@@ -80,7 +80,7 @@ isVideo= (fileExtension) =>{
 isAudio= (fileExtension) =>{
 
     let ext = fileExtension.toLowerCase()
-    let filetypes = ['m4a','wav']
+    let filetypes = ['m4a','wav','acc']
     let found = filetypes.indexOf(fileExtension)
     return !(found === -1)    
 }
@@ -156,11 +156,13 @@ renderVideo = () =>{
     return (
         <div className='player-wrapper'>
             <ReactPlayer
+
             className   =   "react-player"
             url         =   { this.props.memfile.thumburl}
             ref         =   { player => (this.player = player)}
             playing     =    { this.state.videoPlaying }
             width       =   '100%'
+            height      =  '100%'
             
             />
       </div>
