@@ -13,7 +13,7 @@ class App extends React.Component {
     super();
     
     this.state ={
-      route: 'signin',
+      route: 'index',
       isSignedIn: false,
       activeMemory:null,
       cloudsLoaded:false,
@@ -35,6 +35,7 @@ class App extends React.Component {
 
   userSignedin = () => {
     return this.state.isSignedIn;
+    
   }
 
 //---------------------------------------------------------------------------------

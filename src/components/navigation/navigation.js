@@ -332,7 +332,7 @@ class Navigation extends React.Component {
           </div>
           <div className="center">
             <ul>
-              <li className="floatRight width50">
+              <li className="">
                 <input
                   onChange={this.onSearchBoxChange}
                   className="searchBox"
