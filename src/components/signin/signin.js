@@ -21,7 +21,7 @@ class Signin extends React.Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('https://memriio-api-0.herokuapp.com/signin', {
+        fetch('https://memrii-api.herokuapp.com/signin', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body:JSON.stringify({

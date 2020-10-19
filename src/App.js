@@ -3,8 +3,9 @@ import Navigation from './components/navigation/navigation.js';
 import CardCollection from './components/cardcollection/cardcollection.js';
 import Signin from './components/signin/signin.js';
 import Register from './components/register/register.js';
-import Admin from './components/admin/admin.js'
-import * as mem from './components/memriioserver.js'
+import Admin from './components/admin/admin.js';
+import LandingPage from './components/landing/landing.js'
+
 import './App.css';
 
 
@@ -13,7 +14,7 @@ class App extends React.Component {
     super();
     
     this.state ={
-      route: 'signin',
+      route: 'landing',
       isSignedIn: false,
       activeMemory:null,
       cloudsLoaded:false,
@@ -35,6 +36,7 @@ class App extends React.Component {
 
   userSignedin = () => {
     return this.state.isSignedIn;
+    
   }
 
 //---------------------------------------------------------------------------------
@@ -83,6 +85,7 @@ extractSelectedClouds = (webClouds) => {
 
       
     this.setState({searchResult:{memories : memories}})
+    
     
   }
 
@@ -184,6 +187,12 @@ render() {
 
     }else if (routeName === 'register'){
       content = <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+    }else if (routeName === 'landing' ){
+      nav = null
+      content = <LandingPage 
+                    onRouteChange={this.onRouteChange} 
+                    />
+
     }
 
 

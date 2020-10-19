@@ -32,7 +32,7 @@ export async function createMemoryCloud  (cloudName,administratorID){
     console.log('datapass.createMemoryCloud : ' + cloudName + ' admin : ' + administratorID);
     
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/createcloud', {
+        fetch('https://memrii-api.herokuapp.com/createcloud', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -135,7 +135,7 @@ export function mapUserClouds (userid,callback)
 {
     
     console.log('mepUserClouds for user : ' + userid )
-        fetch('https://memriio-api-0.herokuapp.com/get_clouds_userid', {
+        fetch('https://memrii-api.herokuapp.com/get_clouds_userid', {
         method: 'post',headers: {
             'Content-Type':'application/json'},
                 body:JSON.stringify({userID: userid})})
@@ -158,7 +158,7 @@ export function searchMemories (userid,cloudids,searchwords,callback)
 {
     
     console.log('searchMemories for user : ' + userid + ' in groups ' + cloudids + ' searchwords '+ searchwords  )
-    fetch('https://memriio-api-0.herokuapp.com/get_memories_userid_keywords_cloudids', {
+    fetch('https://memrii-api.herokuapp.com/get_memories_userid_keywords_cloudids', {
         method: 'post',headers: {
             'Content-Type':'application/json'},
                 body:JSON.stringify({
@@ -182,7 +182,7 @@ export function searchMemories (userid,cloudids,searchwords,callback)
 export function getMemoryFiles (memid,callback)  
 {
     console.log('getMemoryFiles for memory : ' + memid )
-    fetch('https://memriio-api-0.herokuapp.com/get_memfiles_memoryid', {
+    fetch('https://memrii-api.herokuapp.com/get_memfiles_memoryid', {
         method: 'post',headers: {
             'Content-Type':'application/json'},
                 body:JSON.stringify({memoryid: memid})})
@@ -202,7 +202,7 @@ export function getMemoryFiles (memid,callback)
 export function getMemoryPeople (memid,callback)  
 {
     console.log('getMemoryPeople for memory : ' + memid )
-    fetch('https://memriio-api-0.herokuapp.com/get_associatedpeople_memoryid', {
+    fetch('https://memrii-api.herokuapp.com/get_associatedpeople_memoryid', {
         method: 'post',headers: {
             'Content-Type':'application/json'},
                 body:JSON.stringify({memoryid: memid})})
@@ -223,7 +223,7 @@ export function getMemories (userID,cloudIDs,callback)
 {
     
     console.log('getMemories for user : ' + userID + ' in groups ' + cloudIDs )
-    fetch('https://memriio-api-0.herokuapp.com/get_memories_userid_cloudids', {
+    fetch('https://memrii-api.herokuapp.com/get_memories_userid_cloudids', {
         method: 'post',headers: {
             'Content-Type':'application/json'},
                 body:JSON.stringify({userid: userID,cloudids: cloudIDs})})
@@ -501,7 +501,7 @@ addFileToMemory = (fileUrlObj,ishero) => {
     console.log('addFileToMemory : thumbURL ' + getFilename(thumbURL))
     
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/associateFile', {
+        fetch('https://memrii-api.herokuapp.com/associateFile', {
             method: 'post',headers: {
                 'Content-Type':'application/json'},
                     body:JSON.stringify({
@@ -530,7 +530,7 @@ addFileToMemory = (fileUrlObj,ishero) => {
 export async function getObjectSignedurl (fileName) {
 
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/getObject_signedurl', {
+        fetch('https://memrii-api.herokuapp.com/getObject_signedurl', {
             method: 'post',headers: {
                 'Content-Type':'application/json'},
                     body:JSON.stringify({fileName: fileName})})
@@ -551,7 +551,7 @@ export async function getObjectSignedurl (fileName) {
 addPersontoMemory = (personID) => {
     
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/associatePerson', {
+        fetch('https://memrii-api.herokuapp.com/associatePerson', {
             method: 'post',headers: {
                 'Content-Type':'application/json'},
                     body:JSON.stringify({
@@ -577,7 +577,7 @@ addPersontoMemory = (personID) => {
 addGrouptoMemory = (groupID) => {
 
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/associateGroup', {
+        fetch('https://memrii-api.herokuapp.com/associateGroup', {
             method: 'post',headers: {
                 'Content-Type':'application/json'},
                     body:JSON.stringify({
@@ -604,7 +604,7 @@ addGrouptoMemory = (groupID) => {
 addKeywordtoMemory = (word) => {
 
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/associateKeyword', {
+        fetch('https://memrii-api.herokuapp.com/associateKeyword', {
             method: 'post',headers: {
                 'Content-Type':'application/json'},
                     body:JSON.stringify({
@@ -631,7 +631,7 @@ addKeywordtoMemory = (word) => {
 createMemoryID = () => {
     
     return new Promise((resolve,reject) => {
-        fetch('https://memriio-api-0.herokuapp.com/creatememory', {
+        fetch('https://memrii-api.herokuapp.com/creatememory', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body:JSON.stringify({
