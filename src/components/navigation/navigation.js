@@ -228,7 +228,7 @@ class Navigation extends React.Component {
 
   loadUserClouds = (userid) => {
     let temp = [];
-    console.log("loadUserClouds ", userid);
+    console.log("loadUserClouds Testing ", userid);
     if (userid)
       mem.getUserClouds(userid, (clouds) => {
         clouds.push({
