@@ -1,0 +1,32 @@
+
+
+  .mainPageLink {
+    font-size: 1.25rem;
+    margin-right: 2rem;
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+    padding: 0.5rem;
+    color: #333;
+    display: inline-block;
+    box-sizing: border-box;
+    background-color: transparent;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .mainPageLink:hover {
+    opacity: 0.5;
+  }
+
+  .landingImage{
+    width:70%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .landingContainer{
+    min-height: 100vh;
+    min-width: 100%;
+    background-color: black;
+  }

@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./memrii_logo.png";
+import logo from "../images/memrii_logo.png";
 import * as DropSearch from "../dropsearch/dropsearch";
 import * as mem from "../memriioserver";
 import * as ur from "../userrolls";

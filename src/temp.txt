@@ -1,65 +1,9 @@
-prepAndUploadVideoFile = (file, isHero, uniqueID)=>{
+<div>
+        <p onClick={()=>onRouteChange('signin')} className="mainPageLink signinAP">Sign in</p>
+        <p onClick={this.showAbout} className="mainPageLink joinupAP">About Us</p>
+        <p onClick={()=>onRouteChange('register')} className="mainPageLink joinupAP">Join up</p>
 
-  console.log('prepAndUploadVideoFile : file ' + file.name )
-  let commonfileName = this.state.user.userid + '-' + this.state.memid + '-' + Date.now()
-  let ext = mem.getExtension(file.name)
 
-  let vFolder = commonfileName + '-' + uniqueID
-  let originalfile    = commonfileName + '-' + uniqueID + '-stream'    + '.' + ext
-  let filebuffer = null
-  
-  
-  let memfile = {
-    id        : 0,
-    memid     : this.state.memid,
-    fileurl   : '',     // this will be the original
-    ishero    : false,
-    fileext   : ext,    
-    thumburl  : '',    // this will be the transcoded version
-    thumbext  : '',
-  }
-  
-  return new Promise((resolve,reject) =>{
-  
-    mem.getFilebuffer(file)
-    .then(result =>{
-      console.log('prepAndUploadVideoFile : getFileBuffer was successfull ? ' + result.success )
-      if(result.success){
-        filebuffer = result.data}
-        mem.uploadFile(originalfile,file.buffer)
-        .then(result =>{
-          console.log('prepAndUploadVideoFile : uploadFile ' + originalfile + ' was successfull ? ' + result.success )
-          if(result.success){
-            memfile.fileurl = result.awsurl
-            mem.transcodeVideoToHLS( originalfile , vFolder )
-            .then(result =>{
-              console.log('prepAndUploadVideoFile : transcodeVid.. ' + vFolder+'/'+originalfile + ' was successfull ? ' + result.success )
-              if(result.success){
-                memfile.thumburl = result.data
-                memfile.thumbext = 'm3u8'
+      </div>
 
-                console.log('prepUpload - memid    ' + this.state.memid );
-                console.log('prepUpload - fileurl  ' + memfile.fileurl  );
-                console.log('prepUpload - thumburl ' + memfile.thumburl );
-
-                mem.addFileToMemory({
-                    originalURL:memfile.fileurl,
-                    thumbURL:memfile.thumburl
-                },isHero,this.state.memid)
-                .then(result => {
-                  console.log('prepAndUploadVideoFile : addfiletoMemory was successfull ? ' + result.success )
-                  if(result.success){
-                    resolve(result)
-                  }else{
-                    reject('failed to add file to memory')
-                  }
-                })
-              }
-            })
-          }
-        })        
-      })
-    })
-}
-
-//------------------------------------------------------------------------
+       
