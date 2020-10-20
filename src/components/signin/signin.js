@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from "../images/memrii_landing.png"
 import './signin.css'
 
 
@@ -46,7 +47,8 @@ class Signin extends React.Component {
     render() {
         const {onRouteChange} = this.props
         return (
-            
+            <div className='signupPage'>
+            <img src={logo} className='homelogo' onClick = {()=>this.props.onRouteChange('landing')}/>
             <article className="section">
                 <main className="pa2 black-80">
                     <div className="measure center">
@@ -88,6 +90,7 @@ class Signin extends React.Component {
                     </div>
                 </main>
             </article>
+        </div>
         )
     }
 }

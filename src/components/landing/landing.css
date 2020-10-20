@@ -1,12 +1,13 @@
 
 
   .mainPageLink {
+    
     font-size: 1.25rem;
     margin-right: 2rem;
     opacity: 1;
     transition: opacity 0.25s ease-in-out;
     padding: 0.5rem;
-    color: #333;
+    color:cornflowerblue;
     display: inline-block;
     box-sizing: border-box;
     background-color: transparent;
@@ -17,16 +18,31 @@
     opacity: 0.5;
   }
 
+  .navLine{
+    text-align: right;
+  }
+  
+  .mainImageContainer{
+    margin-top: 8%;
+    width: 70%;
+    align-self: center;
+  }
   .landingImage{
+    
     width:70%;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    
   }
 
   .landingContainer{
+    display:flex;
+    flex-direction: column;
     min-height: 100vh;
     min-width: 100%;
-    background-color: black;
+    background-color:lightgray
+  }
+
+  .aboutAP{
+    position: absolute;
+    top: calc(100vh - 100px) ;
+    left: calc( 50% - 60px );
   }

@@ -1,5 +1,6 @@
 import React from 'react'
-
+import logo from "../images/memrii_landing.png"
+import './register.css'
 
 class Register extends React.Component{
     constructor(props){
@@ -58,8 +59,10 @@ class Register extends React.Component{
     render(){
         
         return (
-            <article className="br3 ba dark-gray b--black-1 mv4 w-100 w-50-m w-25-l mw6 center">
-                <main className="pa4 black-80">
+            <div className='registerPage'>
+            <img src={logo} className='registerlogo' onClick = {()=>this.props.onRouteChange('landing')}/>
+            <article className='registerSection'>
+                <main className="pa2 black-80">
                     <div className="measure center">
                         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                             <legend className="f4 fw6 ph0 mh0">Register</legend>
@@ -115,6 +118,7 @@ class Register extends React.Component{
                     </div>
                 </main>
             </article>
+            </div>
         )
     }
     

@@ -1,0 +1,82 @@
+.AboutPage{
+  display:flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: lightgray;
+}
+
+.navLine{
+  
+  text-align: right;
+}
+
+.contentContainer{
+  width: 100%;
+  min-height: calc( 100vh - 160px );
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+
+.missionTextBlock{
+  text-align: center;
+  max-width: 60%;
+}
+
+.missionText{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  
+  font-size: 1.5rem;
+  margin: auto;
+  margin-top: 20%;
+  line-height: 1rem;
+  
+  color:whitesmoke;
+}
+
+.bottomNavLine{
+  position: absolute;
+  top : calc( 100vh - 80px );
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+.upButton{
+  position: absolute;
+  top: 0 ;
+  left: calc( 50% - 60px );
+  z-index: 200;
+  
+}
+
+.mainPageLink {
+  
+  font-size: 1.25rem;
+  margin-right: 2rem;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+  padding: 0.5rem;
+  color:cornflowerblue;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+.mainPageLink:hover {
+  opacity: 0.5;
+}
+
+.landingImage{
+  width:70%;
+  
+}
+
+  
+
+  
