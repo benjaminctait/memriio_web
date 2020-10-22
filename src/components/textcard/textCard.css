@@ -1,0 +1,18 @@
+.textCard {
+  border: black solid 2px;
+  border-radius: 10px;
+  
+  min-width: 350px;
+  max-width: 350px;
+  padding: 8px;
+  position: absolute;
+  background-color: whitesmoke;
+}
+
+
+.textarea {
+  font-size:x-large;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-top: 5px ;
+  margin-bottom: 5px;
+}
