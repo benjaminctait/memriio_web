@@ -3,7 +3,7 @@ import './about.css'
 import logo from "../images/memrii_landing.png";
 import pageUp from "../images/scroll-up.png";
 import TextCard from "../textcard/textCard"
-
+import ImageCard from '../imagecard/imageCard'
 
 
 
@@ -11,45 +11,55 @@ class AboutPage extends React.Component{
 
 state = {
   contentName:'mission',
-  DOMisBuilt:false,
-  missionPointsArray:null,
-
+  ctx:null
+  
 }
 
 //------------------------------------------------------------------
 
 
 render() {
-  const {onRouteChange} = this.props
   let content = this.getContent()
   
-  console.log('about render');
+
   return (
     <div id = 'about-page' className = 'AboutPage'>
+      
       <div className = 'navLine'>
         <div className = 'upButton'>
-          <img onClick={()=>onRouteChange('landing')} className = 'mainPageLink aboutImage' src = {pageUp} />
+          <img onClick={ ()=> this.changeRoute('landing')} className = 'mainPageLink aboutImage' src = {pageUp} />
+
         </div>
         <div>
-          <p onClick={()=>onRouteChange('signin')} className="mainPageLink ">Sign in</p>
-          <p onClick={()=>onRouteChange('register')} className="mainPageLink ">Join up</p>
+          <p onClick={()=> this.changeRoute('signin')} className="mainPageLink ">Sign in</p>
+          <p onClick={()=> this.changeRoute('register')} className="mainPageLink ">Join up</p>
         </div>
        
       </div>
 
       <div id ='content-field' className= 'contentContainer'>
         {content}
+        <canvas ref="canvas" className='canvas'/>
       </div>
 
       <div className= 'bottomNavLine'>
           <p onClick={()=> this.setState({contentName:'mission' })}  className="mainPageLink ">Mission</p>
-          <p onClick={()=> this.setState({contentName:'team'    })}  className="mainPageLink ">Team</p>
           <p onClick={()=> this.setState({contentName:'process' })}  className="mainPageLink ">Process</p>
+          <p onClick={()=> this.setState({contentName:'team'    })}  className="mainPageLink ">Team</p>
+          
           <p onClick={()=> this.setState({contentName:'contact' })}  className="mainPageLink ">Contact</p>
       </div>
     </div>
       
   )
+}
+
+//------------------------------------------------------------------
+changeRoute = ( route ) =>{
+  const {onRouteChange} = this.props
+  window.removeEventListener('resize', this.drawMissionConnectors )
+  onRouteChange(route)
+  
 }
 
 //------------------------------------------------------------------
@@ -67,41 +77,20 @@ getContent = () => {
 
 renderMission = () => {
   
-  let p = this.state.missionPointsArray
   
-
-  let style = {
-    width:'100%',
-    height:'100%'
+  if(this.state.ctx) {
+    this.state.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
-    if(this.state.DOMisBuilt){
-      
-      
-      return (
-      <div style ={style}>        
-          <TextCard id ='A' top='12%' left='20%' text='Welcome to memrii' />
-          <TextCard id ='B' top='28%' left='10%'  text='We are here to nurture knowledge.' />
-          <TextCard id ='C' top='50%' left="20%"  text='We capture it, we craft it, we connect it all together' />    
-          <TextCard id ='D' top='30%' left="55%"  text='We make it ultra-findable so it’s there when you it the most.' />        
-          <TextCard id ='E' top='50%' left='60%'  text='At memrii we believe knowledge is treasure...' />
-          <TextCard id ='F' top='65%' left='70%'  text='and the root of all future awesomeness.' />
-          <canvas ref="canvas" width={2000} height={1000} top={0} left ={0}/>
-      </div>
-      )
-    }else{
-      return (
-        <div  style ={style}>        
-            <TextCard id ='A' top='12%' left='20%' text='Welcome to memrii' />
-            <TextCard id ='B' top='28%' left='10%'  text='We are here to nurture knowledge.' />
-            <TextCard id ='C' top='50%' left="20%"  text='We capture it, we craft it, we connect it all together' />    
-            <TextCard id ='D' top='30%' left="55%"  text='We make it ultra-findable so it’s there when you it the most.' />        
-            <TextCard id ='E' top='50%' left='60%'  text='At memrii we believe knowledge is treasure...' />
-            <TextCard id ='F' top='65%' left='70%'  text='and the root of all future awesomeness.' />
 
-        </div>
-
-      )
-    }
+  return (
+    <div className='cardField' >        
+        <TextCard id ='A' top='8%' left='30%' text='Welcome to memrii' />
+        <TextCard id ='B' top='30%' left='15%'  text='We are here to nurture knowledge.' />
+        <TextCard id ='C' top='73%' left="25%"  text='We capture it, we craft it, we connect it all together' />    
+        <TextCard id ='D' top='30%' left="60%"   text='We make it ultra-findable so it’s there when you it the most.' />        
+        <TextCard id ='E' top='53%' left='70%'  text='We believe knowledge is treasure and the root of all future awesomeness.' />
+    </div>
+    )
     
 }
 
@@ -109,30 +98,33 @@ renderMission = () => {
 
 renderTeam = () => {
   console.log('render team');
+  if(this.state.ctx) {
+    this.state.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+  }
+
   return (
-    <div className='missionTextBlock'>
-        <p className='missionText'>
-         <p>Team</p> 
-         
-
-        </p>
-
+    <div className='cardField' >        
+        <ImageCard id ='icA' heading = '' text='Team Page' />
+        
     </div>
-
     )
+   
 }
 
 //------------------------------------------------------------------
 
 renderProcess = () => {
   console.log('render process');
-  return (
-    <div className='missionTextBlock'>
-        <p className='missionText'>
-         <p>Process</p> 
-         
-        </p>
+  if(this.state.ctx) {
+    this.state.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+  }
+
+  return (
+    <div className='cardField' >        
+      <TextCard id ='A' top='20%' left='40%' text='Process Page' />
+    
     </div>
 
     )
@@ -142,6 +134,10 @@ renderProcess = () => {
 
 renderContact = () => {
   console.log('render contact');
+  if(this.state.ctx) {
+    this.state.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
   return (
     <div className='missionTextBlock'>
         <p className='missionText'>
@@ -159,80 +155,99 @@ renderContact = () => {
 
 componentDidMount =() =>{
   
+  if(this.state.contentName = 'mission'){
+    this.drawMissionConnectors()
+    window.addEventListener('resize', this.drawMissionConnectors);
+  }
+}
+//------------------------------------------------------------------
+
+componentDidUpdate =  ( prevState) => {
+
+  let cn = this.state.contentName
+
+  if(cn === 'mission' && cn !== prevState.contentName){
+    this.drawMissionConnectors()
+  }
+
+}
+
+//------------------------------------------------------------------
+
+drawMissionConnectors = () =>{
+
   let p =[]
-  if(this.state.contentName = 'mission')
-  {
+
     let welcome   = document.getElementById("A").getBoundingClientRect()
     let nurture   = document.getElementById("B").getBoundingClientRect()
     let capture   = document.getElementById("C").getBoundingClientRect()
     let findable  = document.getElementById("D").getBoundingClientRect()
     let treasure  = document.getElementById("E").getBoundingClientRect()
-    let awesome   = document.getElementById("F").getBoundingClientRect()
-
-        
-    p.push( this.getPointFromRect('RIGHT_MID', welcome  ))
-    p.push( this.getPointFromRect('RIGHT_MID', nurture  ))
-    
-    p.push( this.getPointFromRect('LEFT_MID',  nurture  ))
-    p.push( this.getPointFromRect('LEFT_MID',  capture  ))
-
-    p.push( this.getPointFromRect('RIGHT_MID', capture  ))
-    p.push( this.getPointFromRect('LEFT_MID',  findable ))
-  
-    p.push( this.getPointFromRect('RIGHT_MID', findable ))
-    p.push( this.getPointFromRect('RIGHT_MID', treasure ))
-
-    p.push( this.getPointFromRect('LEFT_MID',  treasure ))
-    p.push( this.getPointFromRect('LEFT_MID',  awesome  ))
-
-    let container = document.getElementById('content-field').getBoundingClientRect()
-    
-    this.setState({ missionPointsArray:p, DOMisBuilt:true },()=>{
-      
-        this.canvas = document.querySelector('canvas');
-        this.canvas.width = container.width
-        this.canvas.height = container.height;
-        this.canvas.top = container.top
-        this.canvas.left = container.left
-        let ctx = this.canvas.getContext('2d');
-        let A = this.getPointFromRect('TOP_RIGHT',  capture  )
-        let B = this.getPointFromRect('TOP_LEFT',  treasure  )
-
-        ctx.moveTo(0, 0);
-        ctx.lineTo(200, 100);
-        ctx.lineTo(A.x , A.y)
-        ctx.lineTo(B.x , B.y)
-
-
-        ctx.stroke();
-
-        let p1 = p[0]
-        let p2 = p[1]
-        
-        ctx.beginPath()
-        ctx.moveTo ( p1.x , p1.y )
-        ctx.arcTo  ( (p1.x+50) , p1.y , (p2.x+50) , (p2.y+50) , 50 )
-        ctx.stroke()
-        
-      })
     
 
     
-    }
-  
+    p.push( this.getPointFromRect('BOTTOM_MID', welcome  ))
+    p.push( this.getPointFromRect('TOP_MID',    nurture  ))
+    p.push( this.getPointFromRect('BOTTOM_MID', nurture  ))
+    p.push( this.getPointFromRect('TOP_MID',    capture  ))
+    p.push( this.getPointFromRect('RIGHT_MID',  capture  ))
+    p.push( this.getPointFromRect('LEFT_MID',   findable ))
+    p.push( this.getPointFromRect('BOTTOM_MID', findable ))
+    p.push( this.getPointFromRect('TOP_MID',    treasure ))
+    
+    
+
+    let container       = document.getElementById('content-field').getBoundingClientRect()
+    this.canvas         = document.querySelector('canvas');
+    this.canvas.width   = container.width
+    this.canvas.height  = container.height;
+    this.canvas.top     = container.top
+    this.canvas.left    = container.left
+    this.state.ctx      = this.canvas.getContext('2d');
+    
+    this.state.ctx.beginPath()
+    this.state.ctx.strokeStyle = 'darkgrey'
+    this.state.ctx.lineWidth = 2
+    this.state.ctx.moveTo(p[0].x, p[0].y);
+    this.state.ctx.lineTo(p[1].x, p[1].y)
+    this.state.ctx.moveTo(p[2].x, p[2].y)
+    this.state.ctx.lineTo(p[3].x, p[3].y)
+    this.state.ctx.moveTo(p[4].x, p[4].y)
+    this.state.ctx.lineTo(p[5].x, p[5].y)
+    this.state.ctx.moveTo(p[6].x, p[6].y)
+    this.state.ctx.lineTo(p[7].x, p[7].y)
+    this.state.ctx.stroke();
+
+   
+    p.forEach(pnt => {
+      this.filledCircle( this.state.ctx,pnt,10,'#8bb7f0','black')
+    });
+    
 }
 
 //------------------------------------------------------------------
 
-getPointFromRect = ( pointType,rect, perim) =>{
+filledCircle = (context,centrePoint,radius,fillColor,strokeColor) =>{
+  let p = centrePoint
+  context.fillStyle = fillColor
+  context.strokeStyle = strokeColor
+  context.moveTo( p.x, p.y)
+  context.arc   ( p.x, p.y, radius , 0 , 360 ) 
+  context.fill()
+}
+
+//------------------------------------------------------------------
+
+getPointFromRect = ( pointType,rect ) =>{
 
   // x - horizontal
   // y -  vertical
   
-  let rleft   =  rect.left - perim
-  let rtop    =  rect.top - perim
-  let rwidth  =  rect.width + ( perim * 2 )
-  let rheight =  rect.height + ( perim * 2)
+  let rleft   =  rect.left 
+  let rtop    =  rect.top - 78  // 78 us the height of the nav bar
+  let rwidth  =  rect.width 
+  let rheight =  rect.height  // 2x border width
+  
 
   let point = { x:0, y:0 }
   switch(pointType) {
@@ -242,24 +257,24 @@ getPointFromRect = ( pointType,rect, perim) =>{
       break;
     case 'LEFT_MID':
       point.x = parseInt( rleft ) 
-      point.y = parseInt( rtop- ( rheight / 2 ))
+      point.y = parseInt( rtop + ( rheight / 2 ))
       break;
     case 'BOTTOM_MID':
       point.x = parseInt( rleft + ( rwidth / 2 ))
-      point.y = parseInt( rtop - rheight )
+      point.y = parseInt( rtop + rheight )
       break;
     case 'RIGHT_MID':
       point.x = parseInt( rleft + ( rwidth ))
-      point.y = parseInt( rtop  - ( rheight / 2 ))
+      point.y = parseInt( rtop  + ( rheight / 2 ))
       break;
 
     case 'TOP_LEFT':
-      point.x = parseInt( rleft )
+      point.x = parseInt( rleft  )
       point.y = parseInt( rtop  )
       break;
     case 'BOTTOM_LEFT':
       point.x = parseInt( rleft )
-      point.y = parseInt( rtop - ( rheight  ))
+      point.y = parseInt( rtop + ( rheight  ))
       break;
     case 'TOP_RIGHT':
       point.x = parseInt( rleft + ( rwidth ))
@@ -267,7 +282,7 @@ getPointFromRect = ( pointType,rect, perim) =>{
     break;    
     case 'BOTTOM_RIGHT':
       point.x = parseInt( rleft + ( rwidth ))
-      point.y = parseInt( rtop - ( rheight  ))
+      point.y = parseInt( rtop + ( rheight  ))
     break;
 
     default:

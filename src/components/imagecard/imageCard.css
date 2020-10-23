@@ -1,4 +1,4 @@
-.textCard {
+.imageCard {
   border: black solid 2px;
   border-radius: 10px;
   padding: 8px;
@@ -10,7 +10,7 @@
 }
 
 
-.textarea {
+.imagearea {
   font-size:x-large;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-top: 5px ;
