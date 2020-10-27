@@ -8,10 +8,12 @@ class TextCard extends React.Component{
 
 render(){
  
-  const {id,text,top,left}  = this.props
+  const {id,text,top,left,width}  = this.props
   let mystyle = {
       top:top,
       left:left,
+      maxWidth:width,
+      minWidth:width
     } 
   
     return (

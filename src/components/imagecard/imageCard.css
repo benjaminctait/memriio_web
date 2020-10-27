@@ -1,18 +1,13 @@
 .imageCard {
-  border: black solid 2px;
+  border:transparent 1px;
   border-radius: 10px;
-  padding: 8px;
-  min-width: 350px;
-  max-width: 350px;
-  
+  padding: 0px;
+  width: 100%;
   position: absolute;
-  background-color: whitesmoke;
+  background-color:transparent;
+  display: inline-block;
 }
 
-
 .imagearea {
-  font-size:x-large;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  margin-top: 5px ;
-  margin-bottom: 5px;
+  
 }

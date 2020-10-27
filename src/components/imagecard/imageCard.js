@@ -2,22 +2,27 @@ import React from 'react';
 
 import './imageCard.css'
 
-
-
 class ImageCard extends React.Component{
 
 render(){
  
-  const {id,text,top,left}  = this.props
-  let mystyle = {
+  const {id,top,left,imgSrc,width}  = this.props
+
+  
+
+  let boxstyle = {
       top:top,
-      left:left,
+      left:left,    
     } 
+  let imgStyle ={
+    maxWidth:width,
+    minWidth:width,
+  }
+
   
     return (
-      <div id={id} className='textCard' style={mystyle} >
-        <p className='textarea'>{text}</p>
-        
+      <div  id={id} className='imageCard' style={boxstyle} >
+        <img  src={imgSrc} className='imagearea' style={imgStyle}/>
       </div>
     )
 }

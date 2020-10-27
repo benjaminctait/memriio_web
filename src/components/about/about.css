@@ -30,6 +30,93 @@
   
 }
 
+.bshadow {
+  box-shadow: 5px 5px 5px darkgray;
+}
+.headingText{
+  font-size: larger;
+  max-width: 100px;
+  padding-top: 5px;
+  border-top: darkgray solid 2px;
+  border-bottom: darkgray solid 2px;
+
+}
+
+
+.blueBorder{
+  border: #8bb7f0 solid 2px;
+  border-radius: 8px;
+  
+}
+.blueBorder:hover{
+  border-width: 3px;
+  cursor: pointer;
+}
+
+.process{
+  position: relative;
+  display: flex;
+  flex-direction: row;  
+  height: 100%;
+  
+  
+}
+.outerBox{
+  position: relative;
+  text-align: center;
+  align-self: center;
+  max-width: 40%;
+  min-width: 40%;
+  max-height: 100%;
+  min-height: 100%;
+}
+.processDescription{
+  position: absolute;
+  text-align: center;
+  font-size: xx-large;
+  align-self: center;
+  color: white;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 80%;
+  min-height: 80%;
+  background-color:lightskyblue ;
+  border-radius: 30px;
+  border: white solid 2px;
+}
+.processBox{
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 10px;
+}
+.processLabel{
+  text-align: start;
+  font-size: xx-large;
+  color: white;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-left: 30px;
+  max-width:200px;
+  background-color:lightskyblue;
+  border-radius: 30px;
+  border: lightskyblue solid 2px;
+}
+.processLabel:hover{
+  border: white solid 2px;
+  cursor: pointer;
+}
+
+.processImageBox{
+  position: relative;
+  margin-left: 50px;
+  width: 100%;
+  
+}
 .cardField{
   min-width: 100%;
   max-width: 100%;
@@ -89,6 +176,26 @@
 .mainPageLink:hover {
   opacity: 0.5;
 }
+
+.processLink{
+  
+  color: white;
+  border: white solid 1px;
+  border-radius: 15px;
+}
+
+.processLinkLine{
+  position: absolute; 
+  bottom: 0px; 
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  
+  
+}
+
+
 
 .landingImage{
   width:70%;
