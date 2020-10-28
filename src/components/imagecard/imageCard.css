@@ -1,0 +1,13 @@
+.imageCard {
+  border:transparent 1px;
+  border-radius: 10px;
+  padding: 0px;
+  width: 100%;
+  position: absolute;
+  background-color:transparent;
+  display: inline-block;
+}
+
+.imagearea {
+  
+}

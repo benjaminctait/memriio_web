@@ -5,6 +5,9 @@ import Signin from './components/signin/signin.js';
 import Register from './components/register/register.js';
 import Admin from './components/admin/admin.js';
 import LandingPage from './components/landing/landing.js'
+import AboutPage from './components/about/about.js'
+
+
 
 import './App.css';
 
@@ -176,6 +179,7 @@ render() {
               onEditMemory  = { this.handleEditMemory  }/>
               
     }else if(routeName === 'signin'){
+      nav = null
       content = <Signin 
                     loadUser={this.loadUser} 
                     onRouteChange={this.onRouteChange} 
@@ -186,10 +190,17 @@ render() {
       content = <Admin/>
 
     }else if (routeName === 'register'){
+      nav = null
       content = <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
     }else if (routeName === 'landing' ){
       nav = null
       content = <LandingPage 
+                    onRouteChange={this.onRouteChange} 
+                    />
+
+    }else if (routeName === 'about' ){
+      nav = null
+      content = <AboutPage 
                     onRouteChange={this.onRouteChange} 
                     />
 

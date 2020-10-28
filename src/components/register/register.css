@@ -1,0 +1,32 @@
+.registerPage{
+  top: 0;
+  background-color: lightgray;
+  width: 100%;
+  height: 100vh;
+}
+
+.registerlogo{
+  position: absolute;
+  width:200px;
+  top: 5px;
+  left:5px;
+  cursor:pointer;
+}
+.registerlogo:hover{
+  border: solid black 1px;
+  border-radius: 5px;
+  
+}
+
+.registerSection {
+  border-radius: 1em;
+  min-width: 350px;
+  border: black solid 2px;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+}

@@ -1,0 +1,207 @@
+.AboutPage{
+  display:flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: lightgray;
+}
+
+.canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+.navLine{
+  
+  text-align: right;
+}
+
+.contentContainer{
+  width: 100%;
+  min-height: calc( 100vh - 160px );
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  
+}
+
+.bshadow {
+  box-shadow: 5px 5px 5px darkgray;
+}
+.headingText{
+  font-size: larger;
+  max-width: 100px;
+  padding-top: 5px;
+  border-top: darkgray solid 2px;
+  border-bottom: darkgray solid 2px;
+
+}
+
+
+.blueBorder{
+  border: #8bb7f0 solid 2px;
+  border-radius: 8px;
+  
+}
+.blueBorder:hover{
+  border-width: 3px;
+  cursor: pointer;
+}
+
+.process{
+  position: relative;
+  display: flex;
+  flex-direction: row;  
+  height: 100%;
+  
+  
+}
+.outerBox{
+  position: relative;
+  text-align: center;
+  align-self: center;
+  max-width: 40%;
+  min-width: 40%;
+  max-height: 100%;
+  min-height: 100%;
+}
+.processDescription{
+  position: absolute;
+  text-align: center;
+  font-size: xx-large;
+  align-self: center;
+  color: white;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 80%;
+  min-height: 80%;
+  background-color:lightskyblue ;
+  border-radius: 30px;
+  border: white solid 2px;
+}
+.processBox{
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 10px;
+}
+.processLabel{
+  text-align: start;
+  font-size: xx-large;
+  color: white;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-left: 30px;
+  max-width:200px;
+  background-color:lightskyblue;
+  border-radius: 30px;
+  border: lightskyblue solid 2px;
+}
+.processLabel:hover{
+  border: white solid 2px;
+  cursor: pointer;
+}
+
+.processImageBox{
+  position: relative;
+  margin-left: 50px;
+  width: 100%;
+  
+}
+.cardField{
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  z-index: 5;
+}
+
+.missionTextBlock{
+  text-align: center;
+  max-width: 60%;
+}
+
+.missionText{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  
+  font-size: 1.5rem;
+  margin: auto;
+  margin-top: 20%;
+  line-height: 1rem;
+  
+  color:whitesmoke;
+}
+
+.bottomNavLine{
+  position: absolute;
+  top : calc( 100vh - 80px );
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+.upButton{
+  position: absolute;
+  top: 0 ;
+  left: calc( 50% - 60px );
+  z-index: 200;
+  
+}
+
+.mainPageLink {
+  
+  font-size: 1.25rem;
+  margin-right: 2rem;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+  padding: 0.5rem;
+  color:cornflowerblue;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+.mainPageLink:hover {
+  opacity: 0.5;
+}
+
+.processLink{
+  
+  color: white;
+  border: white solid 1px;
+  border-radius: 15px;
+}
+
+.processLinkLine{
+  position: absolute; 
+  bottom: 0px; 
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  
+  
+}
+
+
+
+.landingImage{
+  width:70%;
+  
+}
+
+  
+
+  
