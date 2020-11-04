@@ -47,13 +47,10 @@ class MemoryModal extends React.Component{
         author:null,
         memfileIndex:0,
         editMode:false,
-
         showSelectPeople:false,
         showSelectClouds:false,
-
         addPeopleRef:null,
         addPeopleRect:null,
-
         addCloudRef:null,
         addCloudRect:null,
         
@@ -72,16 +69,12 @@ class MemoryModal extends React.Component{
     if(this.props.memory)
     {
       if(!prevProps.memory || this.props.memory.memid !== prevProps.memory.memid){
-
-        
-
         this.populateMemoryFiles ( this.props.memfiles )
-        mem.getUser              ( this.props.memory.userid,( author => { this.setState({author:author})}))
-        mem.getTaggedPeople      ( this.props.memory.memid, ( people => { this.setState({taggedPeople:people})}))
-        mem.getMemoryClouds      ( this.props.memory.memid, ( clouds => { this.populateCloudInfo(clouds)}))
-        mem.getMemorySearchWords ( this.props.memory.memid, ( words  => { this.populateSearchWords(words)}))
-        mem.getUserClouds        ( this.props.memory.userid,( clouds => { this.setState({userClouds:clouds})}))
-        
+        mem.getUser              ( this.props.memory.userid  , ( author => { this.setState({author:author})}))
+        mem.getTaggedPeople      ( this.props.memory.memid   , ( people => { this.setState({taggedPeople:people})}))
+        mem.getMemoryClouds      ( this.props.memory.memid   , ( clouds => { this.populateCloudInfo(clouds)}))
+        mem.getMemorySearchWords ( this.props.memory.memid   , ( words  => { this.populateSearchWords(words)}))
+        mem.getUserClouds        ( this.props.memory.userid  , ( clouds => { this.setState({userClouds:clouds})}))
       }      
     }
   }
@@ -436,14 +429,16 @@ let plus = null
           ) 
         }
         people.reverse()   
-    return people
+    return <div>{people}</div>
   }
 }
 
 //------------------------------------------------------------------------
 
 renderDetails =() => {
-  
+
+    
+
   if(this.props.memory){    
    return (
       <div>
@@ -762,16 +757,17 @@ renderCloudDropdown = () => {
 
  
   if(this.state.showSelectClouds){
+    
       return (
         // cRect,clouds, selected,showmulti,keepInList,callBack,userid,
         DropSearch.cloudDropSearch(
-              this.state.addCloudRect,
-              this.state.userClouds,
-              null,
-              true,
-              true ,
-              this.handleAddCloud,
-              this.state.userid              
+              this.state.addCloudRect,    // c-rect
+              this.state.userClouds,      // clouds
+              this.state.memoryClouds,    // selected
+              false,                      // shomulti
+              false ,                     // keepInList
+              this.handleAddCloud,        // callback
+              this.state.userid           // userid   
         )
     )
     }else{
@@ -788,7 +784,6 @@ renderDetailsZone = () => {
   const details         = this.renderDetails()
   const clouds          = this.renderClouds()
   const cornerCtrls     = this.renderCornerControls()
-
   const cloudDropdown   = this.renderCloudDropdown()
   const peopleDropdown  = this.renderPeopleDropdown()
   
@@ -898,8 +893,7 @@ prepAndUploadImageFile = (file)=>{
                     },false,this.props.memory.memid)
                     .then(result => {
                       if(result.success){
-                        console.log('file upload success ! : new memory id :' + JSON.stringify(result));
-
+                        console.log('FILE UPLOAD SUCCESS ! : new memory id :' + JSON.stringify(result));
                       }
                     })
                   }

@@ -84,6 +84,7 @@ console.log('cardCollection.card clicked - memid : ' + memid);
                                 ref={function(c) {this.masonry = this.masonry || c.masonry;}.bind(this)} 
                                 >                          
                                 {  this.state.memories.map(memory => {
+                                    
                                     let ukey = 'memcard' + memory.memid                                    
                                     if(memory.cardtype === 0){
                                         return (

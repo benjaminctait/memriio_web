@@ -1,53 +1,57 @@
 renderProcess = () => {
-  console.log('render process');
-  if(this.state.ctx) {
-    this.state.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  console.log('render process : ',this.state.viewProcess);
+  let processContent = null
+  if(this.state.viewProcess === 'process') processContent = this.renderProcessDescription()
+  if(this.state.viewProcess === 'capture') processContent = this.renderProcessCapture()
+  if(this.state.viewProcess === 'craft') processContent = this.renderProcessCraft()
+  if(this.state.viewProcess === 'connect') processContent = this.renderProcessConnect()
+  if(this.state.viewProcess === 'measure') processContent = this.renderProcessMeasure()
    
-  }
-
+  
+  
   return (
     <div className='cardField' >     
-          
-      <ImageCard  id ='iphone' 
-                  top='5%' 
-                  left='5%' 
-                  width={150}
-                  imgSrc={iphone} />
-      <ImageCard  id ='laptop' 
-                  top='60%' 
-                  left='3%' 
-                  width={350}
-                  imgSrc={laptop} />
-      
-      <TextCard   id ='process-capture' 
-                  top='35%' 
-                  left='20%' 
-                  width={200}                  
-                  text='Capture' />
-
-      <ImageCard  id ='workerGuy' 
-                  top='5%' 
-                  left='32%' 
-                  width={200}
-                  imgSrc={workerGuy} />
-
-      <ImageCard  id ='memriiGirl' 
-                  top='50%' 
-                  left='34%' 
-                  width={200}
-                  imgSrc={memriiGirl} />
-      
-      <TextCard   id ='process-craft'  exc
-
-                  top='55%' 
-                  left='48%' 
-                  width={200}                  
-                  text='Craft' />
-      
-    
+      <div className='process' >
+        <div className='processBox ' style={{textAlign : 'center'}}>
+          <p className= 'processLabel '
+              onClick={()=>this.setState({viewProcess:'capture', captureView:'mobile'}) }>Capture </p>
+          <p className= 'processLabel '
+              onClick={()=>this.setState({viewProcess:'craft' , craftView:'phone' }) }>Craft </p>
+          <p className= 'processLabel '
+              onClick={()=>this.setState({viewProcess:'connect' , connectView:'soft'}) }>Connect </p>
+          <p className= 'processLabel '
+              onClick={()=>this.setState({viewProcess:'measure' , measureView:'points'}) }>Measure </p>
+           
+        </div>
+        
+        <div className='processImageBox ' >
+          {processContent}
+        </div>
+       
+      </div>
     </div>
 
     )
 }
 
-      
+
+renderProcessDescription = () =>{
+  return (
+    <div style={{height:'100%', display:'flex',flexDirection:'row',justifyContent:'left'}}>
+      <div className= 'processDescription '>
+        <p > You're busy at work. </p>
+        <p >Capturing organisational knowledge is a time consuming 
+           and  distracting.</p>  
+
+        <p >We aim to make capturing knowledge easy.</p>
+
+        <p >Just click and send, We'll do the rest</p>
+        
+        
+      </div>
+
+    </div>
+
+    )
+
+}
