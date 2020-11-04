@@ -292,8 +292,7 @@ class Navigation extends React.Component {
     let selected = this.state.selectedClouds;
 
     if (ur.showAdminOnNavBar(userid)) {
-      adminButton = (
-        <li className="stdListItem">
+      adminButton = (        
           <a
             className="linkText"
             onClick={this.handleAdminClick}
@@ -301,8 +300,7 @@ class Navigation extends React.Component {
             title="Administration"
           >
             Admin
-          </a>
-        </li>
+          </a>        
       );
     }
     console.log("renderStandardNav.userClouds ", this.state.userClouds);
@@ -323,32 +321,36 @@ class Navigation extends React.Component {
     return (
       <nav>
         <div className="container">
-          <div className="left">
+          <div className="nav-left">
             <ul>
               <li className="floatLeft">
                 <img src={logo} className="logo" alt="memriio"></img>
               </li>
             </ul>
           </div>
-          <div className="center">
+          <div className="nav-center">
             <ul>
-              <li className="">
+
+              <li className='nav-searchbox'>            
                 <input
-                  onChange={this.onSearchBoxChange}
+                  onChange={this.onSearchBoxChange}   
                   className="searchBox"
                   type="text"
                   aria-describedby="name-desc"
                 ></input>
               </li>
 
-              <li className="floatRight width50">{cloudbox}</li>
+              <li className='nav-cloudbox'>
+                {cloudbox}
+              </li>
+
             </ul>
           </div>
-          <div className="right">
+          <div className="nav-right floatRight">
             <ul>
               <li className="floatRight">
                 <a
-                  className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2"
+                  className="linkText"
                   onClick={this.handleShowNewMemory}
                   href="#newpost"
                   title="New"
@@ -357,19 +359,12 @@ class Navigation extends React.Component {
                 </a>
               </li>
               <li className="floatRight">
-                <a
-                  className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2"
-                  onClick={this.handleAdminClick}
-                  href="#admin"
-                  title="Administration"
-                >
-                  Admin
-                </a>
+                {adminButton}
               </li>
               <li className="floatRight">
                 <a
                   onClick={this.handleSignOut}
-                  className="link dim dark-gray f4-ns dib mr3 mr4-ns pa2"
+                  className="linkText"
                   href="#"
                   title="Log Out"
                 >
@@ -402,7 +397,7 @@ class Navigation extends React.Component {
           <li className="floatRight">
             <a
               onClick={() => onRouteChange("signin")}
-              className="link dim dark-gray f6 f4-ns dib"
+              className="linkText"
               href="#"
               title="Log "
             >
@@ -430,7 +425,7 @@ class Navigation extends React.Component {
         <div className="dtc v-mid w-75 tr">
           <a
             onClick={() => onRouteChange("home")}
-            className="link dim dark-gray f6 f4-ns dib"
+            className="linkText"
             href="#"
             title="Home "
           >

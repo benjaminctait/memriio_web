@@ -318,13 +318,18 @@ handleHideCloudSearch = () => {
 
     let memoryContent     = this.renderMemoryContent()
     let carouselControls  = null
-    if(this.state.memfiles.length>1) carouselControls  = this.renderCarouselControls()
+    let thumbArray = null
+    if(this.state.memfiles.length>1) {
+      carouselControls  = this.renderCarouselControls()
+      thumbArray = this.renderThumbnailArray()
+    }
     
     return(
       <div className= 'backdropStyle'>
         <div className='modalStyle'>
           {memoryContent}   
           {carouselControls}
+          {thumbArray}
         </div>
       </div>
     )    
@@ -533,7 +538,18 @@ renderImageZone =()=>{
   let editControls=null
   let af = this.state.activefile
   let tempFile = null
-  
+
+  if(af)
+  {
+    tempFile = 
+    {
+      fileurl:af.localurl,
+      ishero:af.ishero,
+      fileext:mem.getExtension(af.file.name),
+      thumburl:af.localurl,
+      thumbext:mem.getExtension(af.file.name)
+    }
+  }
   var heroImg = this.activeFileisHero() ? hero : heroOutline;
   
   editControls = 
@@ -550,38 +566,35 @@ renderImageZone =()=>{
       />
   </div>
 
-  if(af)
+  if(tempFile)
   {
-    tempFile = 
-    {
-      fileurl:af.localurl,
-      ishero:af.ishero,
-      fileext:mem.getExtension(af.file.name),
-      thumburl:af.localurl,
-      thumbext:mem.getExtension(af.file.name)
-    }
     return (
-      <div className='imgcolumn'>
-        <MemoryFileViewer 
-          memfile={tempFile}
-          thumbStyleClass={'memoryModalImage'}
-          fileStyleClass={'memoryModalImage'}
-        />
-        {editControls}
-      </div>
+      <Dropzone onDrop={acceptedFiles => this.handleDropfiles(acceptedFiles)}>
+      {
+        ({getRootProps, getInputProps}) => (              
+          <div className='dropHere' {...getRootProps()}>           
+              < img  className = 'memoryModalImage' src={tempFile.fileurl}/>
+            </div>
+        )
+      }
+    </Dropzone> 
     )
   }else{
     
-    return (
-      <div className='imgcolumn'>
-        <MemoryFileViewer 
-          memfile           = { null }
-          thumbStyleClass   = { 'memoryModalImage'}
-          fileStyleClass    = { 'memoryModalImage'}
-          alternateRenderer = { this.renderDropHere }
-        />
-      </div>
+    return (  
+      <Dropzone onDrop={acceptedFiles => this.handleDropfiles(acceptedFiles)}>
+        {
+          ({getRootProps, getInputProps}) => (              
+            <div className='dropHere' {...getRootProps()}>
+              < div className = 'crossdots'>
+                < div className = 'dropText'>FILE DROP</div>
+              </div>
+            </div>    
+          )
+        }
+      </Dropzone>    
     )
+    
   }
 
     
@@ -731,8 +744,8 @@ renderCloudDropdown = () => {
               this.state.addCloudRect,
               this.state.userClouds,
               null,
-              true,
-              true ,
+              false,
+              false ,
               this.handleAddCloud,
               this.state.userid              
         )
@@ -946,6 +959,18 @@ prepAndUploadVideoFile = (mfile, isHero, uniqueID)=>{
 
 renderCarouselControls = () => {
 
+ 
+  return (
+    <div className='controlbox'>
+      <img className='closeBtn' src = {left} onClick={this.goBack} />    
+      <img className='closeBtn' src = {right} onClick={this.goForward} /> 
+    </div>
+  )  
+}
+
+//------------------------------------------------------------------------
+
+renderThumbnailArray = () =>{
   const mem = this.state
   const mfiles = mem.memfiles
 
@@ -953,13 +978,11 @@ renderCarouselControls = () => {
       return(<img key={'thumb'+index} className='thumb' src = {mfile.localurl} onClick={(index) =>{}}/>)})
   
   return (
-    <div className='controlbox'>
-      <img className='closeBtn' src = {left} onClick={this.goBack} />                  
-            <div className='thumbArrayEdit' >
-              {thumbs}
-            </div>        
-      <img className='closeBtn' src = {right} onClick={this.goForward} /> 
-    </div>
+                   
+      <div className='thumbArrayEdit' >
+        {thumbs}
+      </div>    
+    
   )  
 }
 
@@ -975,6 +998,8 @@ goBack = (e) => {
   }
   this.setState({activefile:this.state.memfiles[this.state.memfileIndex]})  
 }
+
+//------------------------------------------------------------------------
 
 goForward = (e) => {
   

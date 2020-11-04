@@ -9,6 +9,7 @@ export const UR_SYSTEM_ADMINISTRATOR = 0
 //-------------------------------------------------------------------------------
 
 export function showAdminOnNavBar( userid ){
+    console.log('ur : show admin on nav bar userid: ', userid===1);
     return userid === 1
 }
 

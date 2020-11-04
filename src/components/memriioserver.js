@@ -814,7 +814,7 @@ export function updatedUserClouds ( userid, cloudArrayString){
 
 
 export function getUserClouds (userid,callback){
-    memriiolog(false,('Memriio.getUserClouds : userid ' + userid ))
+    memriiolog(true,('Memriio.getUserClouds : userid ' + userid ))
   
     fetch('https://memrii-api.herokuapp.com/get_clouds_userid', {
         method: 'post',headers: {
@@ -823,7 +823,7 @@ export function getUserClouds (userid,callback){
                 .then(response => response.json())
                 .then(res => {
                     if ( res.success ){
-                        memriiolog(false,('getUserClouds :server response : ' + res.success))
+                        memriiolog(true,('getUserClouds :server response : ' + res.success))
                         callback(res.data)
                         return true
                     }else{

@@ -6,15 +6,6 @@
   background-color: lightgray;
 }
 
-.canvas{
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  max-width: 100%;
-  min-height: 100%;
-  max-height: 100%;
-}
 .navLine{
   
   text-align: right;
@@ -23,10 +14,12 @@
 .contentContainer{
   width: 100%;
   min-height: calc( 100vh - 160px );
+  max-height: calc( 100vh - 160px );
   display: flex;
   flex-direction: row;
   justify-content: center;
   position: relative;
+  background-color: rgb(0,0,0,.9);
   
 }
 
@@ -72,21 +65,39 @@
 }
 .processDescription{
   position: absolute;
-  text-align: center;
-  font-size: xx-large;
-  align-self: center;
+  top: 10%;
+  left: 25%;
+  width: 75%;
+  padding-left: 2%;
+  padding-right: 2%;
+  font-size: 2.3rem;
   color: white;
-  padding: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  max-width: 100%;
-  min-width: 100%;
-  max-height: 80%;
-  min-height: 80%;
-  background-color:lightskyblue ;
-  border-radius: 30px;
-  border: white solid 2px;
+  background-color: rgb(0,0,0,.5) ;
+  border-radius: 50px;
+  border: solid white 1px ;
 }
+
+@media only screen and (max-width: 1800px) {
+  .processDescription {
+    font-size: 2rem;   
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 1700px) {
+  .processDescription {
+    font-size: 1.8rem;  
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .processDescription {
+    font-size: 1.4rem;   
+    width: 85%;
+  }
+}
+
+
 .processBox{
   position: relative;
   margin-top: auto;
@@ -113,16 +124,137 @@
 
 .processImageBox{
   position: relative;
-  margin-left: 50px;
+  
   width: 100%;
   
 }
 .cardField{
+  position: relative;
+  text-align: center;
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
+  max-height: 100%;
+
+}
+.missionOverlay{
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 50%;
+  padding-left: 2%;
+  padding-right: 2%;
+  font-size: 2.5rem;
+  color: white;
+  background-color: rgb(255,255,255,0) ;
+  border-radius: 50px;
+  border: solid white 1px ;
+
+}
+@media only screen and (max-width: 1400px) {
+  .missionOverlay {
+    font-size: 1.8rem;
+    left: 20%;
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .missionOverlay {
+    font-size: 1.4rem;
+    left: 15%;
+    width: 70%;
+  }
+}
+
+.connect{
+  background-color: rgba(226, 223, 223, 0.877);
+  color: black;
+  left:12%;
+  top:2%;
+  border: black solid 1px;
+  width: 20%;
+  height:96%;
+}
+.measurePoints{
+  background-color: rgba(0,0,0,.5);
+  color: black;
+  left:12%;
+  top:70%;
+  border: black solid 1px;
+  width: 60%;
+  height:20%;
+}
+.proButton{
+  font-size: 2rem;
+  color: lightgray;
+  border: lightgray solid 1px;
+  padding: 5px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.proButton:hover{
+  color: lightskyblue;
+  border: lightskyblue solid 1px;
+  padding: 5px;
+  border-radius: 12px;
+  background-color: rgb(255,255,255,.2);
+  cursor: pointer;
+}
+
+.leftScreenClick{
+  position: absolute;
+  left:20px;
+  top:50%;
+  
+}
+
+.rightScreenClick{
+  position: absolute;
+  right:20px;
+  top:50%;
+  
+}
+
+.mission-bg{
+  position: relative;
   min-width: 100%;
-  z-index: 5;
+  max-height: 100%;
+  object-fit: none;
+
+}
+.connect-bg{
+  position: relative;
+  min-height: 100%;
+  max-height: 100%;
+  object-fit: cover;
+
+}
+
+
+.contentFlexArea{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  background-color: rgb(0,0,0,.7);
+ 
+}
+.bgc90{
+  background-color: rgb(0,0,0,.9); 
+}
+.bcgSepia{
+  background-color: rgb(43.9,25.9,7.8,.8); 
+}
+.capture-bg{
+  position: relative;
+  min-width: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .missionTextBlock{
@@ -159,6 +291,22 @@
   
 }
 
+.mailTo{
+  margin: 0;
+  color: lightskyblue;
+  text-decoration: none;
+  position: absolute;               
+  top: 50%;                           
+  left: 40%;
+  border :lightskyblue solid 1px;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 2.5rem;
+}
+.mailTo:hover{
+  color: whitesmoke;
+}
+
 .mainPageLink {
   
   font-size: 1.25rem;
@@ -181,7 +329,19 @@
   
   color: white;
   border: white solid 1px;
-  border-radius: 15px;
+  border-radius: 25px;
+  margin-right: 0px;
+  background-color: lightskyblue;
+  border: lightskyblue solid 2px;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  min-width: 200px;
+  max-width: 200px;
+}
+.processLink:hover{
+  border: white solid 2px;
+  cursor: pointer;
+
 }
 
 .processLinkLine{
@@ -194,8 +354,6 @@
   
   
 }
-
-
 
 .landingImage{
   width:70%;

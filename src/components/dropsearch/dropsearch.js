@@ -62,12 +62,19 @@ export function peopleDropSearch ( cRect, people ,callBack){
 
 export function cloudDropSearch ( cRect , clouds , selected , showmulti , keepInList , callBack , userid ){
   userid = userid || 0
-  
-  let cloudnames = clouds.map((cloud,idx) => {
+  let selectedValues = []
+  let cloudnames = []
+
+  if(clouds){
+    cloudnames = clouds.map((cloud,idx) => {
       return {value : cloud.id, label: cloud.name}})
+  }
   
-  let selectedValues = selected.map((cloud,idx) => {
-    return {value : cloud.id, label: cloud.name}})
+  if(selected){
+    selectedValues = selected.map((cloud,idx) => {
+      return {value : cloud.id, label: cloud.name}})
+  }
+  
   
   let cStyle = null
   if(cRect){
