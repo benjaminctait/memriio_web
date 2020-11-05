@@ -1,32 +1,20 @@
 import React from 'react';
 import './about.css'
 
-import capture       from '../images/capture.png'
-import laptop       from '../images/laptop.png'
+
 import pageUp       from "../images/scroll-up.png";
-import craft        from '../images/craft.png'
 
-import softConnect  from '../images/soft-connect.png'
-import hardConnect  from '../images/hard-connect.png'
-
-import missionBG    from '../images/mission-background.png'
 import mission      from '../images/mission.png'
 import process      from '../images/process.png'
-import captureBG    from '../images/capturePhone-BG.jpeg'
-import capture2     from '../images/man-farm-phone.jpg'
-import craftA       from '../images/man-phone-boat.jpg'
+import capture      from '../images/capture.png'
+import craftA       from '../images/craftA.png'
 import craftB       from '../images/craftB.png'
-
+import softConnect  from '../images/soft-connect.png'
+import hardConnect  from '../images/hard-connect.png'
 import measureA     from '../images/measureA.png'
 import measureB     from '../images/measureB.png'
 import measureC     from '../images/measureC.png'
-//import contact      from '../images/contact.png'
-
-import team     from '../images/team.png'
-
-import TextCard from "../textcard/textCard"
-import ImageCard from '../imagecard/imageCard'
-
+import team         from '../images/team.png'
 
 class AboutPage extends React.Component{
 
@@ -198,30 +186,11 @@ renderCapture = () =>{
 //------------------------------------------------------------------
 
 renderCraftPhone = () => {
-  let textContent = <div>
-                      <p>At memrii we create high quality knowlelge networks. </p>
-                      <p>We do this by combining AI with HI or Human Intelegence</p>
-                      <p >Our process starts with short phone call to understand 
-                        why this knowledge is important </p>
-
-                      <p >From there we create a succinct but crafted story for each memory providing context and meaning</p>
-                      
-                    </div>
-                  
   return (
     <div className='cardField' >  
-        <img className='capture-bg' src = {craftA}/>
-        <div className='contentFlexArea'>
-          <div className='outerBox'>
-            <div className= 'processDescription' >
-              {textContent}
-            </div>
-          </div>
-        <div style={{alignSelf:'center'}}>
-          <img src={craft} style={{ width:'70%'}}/>
-        </div>
-
-        <p  className=' proButton leftScreenClick'
+      <img className='capture-bg ' src = {craftA}/>
+      
+       <p  className=' proButton leftScreenClick'
             onClick={()=>{this.setState({subContent:'capture'})}}    
         > { '<' }</p>
 
@@ -230,11 +199,14 @@ renderCraftPhone = () => {
         > { '>' }</p>
 
       </div>
-    </div>
+    
   )
 }
 
+
+
 //------------------------------------------------------------------
+
 
 renderCraftContext = () =>{
   
