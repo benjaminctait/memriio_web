@@ -189,7 +189,7 @@ renderCraftPhone = () => {
   return (
     <div className='cardField' >  
       <img className='capture-bg ' src = {craftA}/>
-      
+
       <p  className=' proButton leftScreenClick'
             onClick={()=>{this.setState({subContent:'capture'})}}    
         > { '<' }</p>
@@ -202,7 +202,10 @@ renderCraftPhone = () => {
   )
 }
 
+
+
 //------------------------------------------------------------------
+
 
 renderCraftContext = () =>{
   
