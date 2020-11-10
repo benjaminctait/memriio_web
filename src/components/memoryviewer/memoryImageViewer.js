@@ -158,7 +158,7 @@ renderVideo = () =>{
             <ReactPlayer
 
             className   =   "react-player"
-            url         =   { this.props.memfile.thumburl}
+            url         =   { this.props.memfile.thumburl?this.props.memfile.thumburl:this.props.memfile.displayurl}
             ref         =   { player => (this.player = player)}
             playing     =    { this.state.videoPlaying }
             width       =   '100%'
