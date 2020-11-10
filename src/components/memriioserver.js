@@ -1189,6 +1189,7 @@ export function addFileToMemory  (fileUrlObj,ishero,memoryid)  {
                         fileurl: sourceURL,
                         fileext: sourceext,
                         thumburl: thumbURL,
+                        displayurl:thumbURL,
                         thumbext: thumbext,
                         ishero: ishero
                         })
