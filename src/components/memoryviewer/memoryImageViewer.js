@@ -80,7 +80,7 @@ isVideo= (fileExtension) =>{
 isAudio= (fileExtension) =>{
 
     let ext = fileExtension.toLowerCase()
-    let filetypes = ['m4a','wav','acc']
+    let filetypes = ['m4a','wav','aac']
     let found = filetypes.indexOf(fileExtension)
     return !(found === -1)    
 }
@@ -152,13 +152,14 @@ handleVideoReady = () => {
 
 renderVideo = () =>{
     
+    console.log("mem file:",this.props.memfile)
 
     return (
         <div className='player-wrapper'>
             <ReactPlayer
 
             className   =   "react-player"
-            url         =   { this.props.memfile.thumburl?this.props.memfile.thumburl:this.props.memfile.displayurl}
+            url         =   { this.props.memfile.displayurl}
             ref         =   { player => (this.player = player)}
             playing     =    { this.state.videoPlaying }
             width       =   '100%'
@@ -173,12 +174,12 @@ renderAudio = () =>{
 
     return (
         <div className='player-wrapper'>
-            <Audio class="react-player" controls="controls"
+            <audio class="react-player" controls="controls"style={{backgroundColor:"#C8C8C8",marginTop:"350px",width:"100%"}} 
             
             >
                  <source src={this.props.memfile.fileurl} type="audio/mp4"></source>
 
-            </Audio>
+            </audio>
       </div>
   )
 }
@@ -196,6 +197,7 @@ render(){
     if(alternateRenderer) { 
         return ( alternateRenderer() )
     } else {
+        console.log("filetype",this.state.fileType)
         if(this.state.fileType === 'image') {
             
             visibleContent = this.renderImageThumb()}
@@ -205,7 +207,7 @@ render(){
         }
         else if (this.state.fileType === 'audio'){
             
-            visibleContent = this.renderVideo() 
+            visibleContent = this.renderAudio() 
         }
         else{
             visibleContent = null
