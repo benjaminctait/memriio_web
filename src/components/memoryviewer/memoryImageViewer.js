@@ -168,6 +168,20 @@ renderVideo = () =>{
       </div>
   )
 }
+renderAudio = () =>{
+    
+
+    return (
+        <div className='player-wrapper'>
+            <Audio class="react-player" controls="controls"
+            
+            >
+                 <source src={this.props.memfile.fileurl} type="audio/mp4"></source>
+
+            </Audio>
+      </div>
+  )
+}
 
 //-----------------------------------------------------------------------------
 
@@ -188,7 +202,12 @@ render(){
         else if (this.state.fileType === 'video'){
             
             visibleContent = this.renderVideo() 
-        }else{
+        }
+        else if (this.state.fileType === 'audio'){
+            
+            visibleContent = this.renderVideo() 
+        }
+        else{
             visibleContent = null
         }
     
