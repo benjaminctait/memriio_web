@@ -125,3 +125,53 @@ export function cloudDropSearch ( cRect , clouds , selected , showmulti , keepIn
 }
 
 //-------------------------------------------------------------------
+
+export function cardDropSearch ( cRect, cardTypeArray ,currentIndex, callBack){
+ 
+  
+  let cStyle = null
+  if(cRect){
+    cStyle = { position:'fixed', top:cRect.y, width:cRect.width}
+  }
+
+  return (
+    
+    <div style = {cStyle} >
+      <SelectDropDown 
+          
+          placeholder   = { cardTypeArray[currentIndex] }
+          options       = { cardTypeArray } 
+          searchable    = { false }
+          closeOnSelect = { true }
+          clearOnSelect = { true }
+          
+          //------------
+
+          onChange = { 
+              items => {
+                console.log('cardDropSearch ', items[0]);
+                let index = cardTypeArray.indexOf(items[0])
+                console.log('cardDropSearch ', index);
+                if(callBack) callBack(index)
+              }
+            }
+
+          //------------
+
+          itemRenderer = {({ item, itemIndex, props, state, methods }) => (
+              
+            <ImageLabel 
+              
+              key={'i' + itemIndex} 
+              onClick={() => methods.addItem(item)} 
+              leftImg = {tag}
+              label = {cardTypeArray[itemIndex]}
+            />
+          )}
+          
+      />
+    </div>
+  )
+}
+
+//-------------------------------------------------------------------

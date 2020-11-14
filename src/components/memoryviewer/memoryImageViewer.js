@@ -197,7 +197,7 @@ render(){
     if(alternateRenderer) { 
         return ( alternateRenderer() )
     } else {
-        console.log("filetype",this.state.fileType)
+        //console.log("filetype",this.state.fileType)
         if(this.state.fileType === 'image') {
             
             visibleContent = this.renderImageThumb()}

@@ -32,6 +32,7 @@ class MemoryModal extends React.Component{
     super(props);
     this.state.addPeopleRef = React.createRef();
     this.state.addCloudRef = React.createRef();
+    this.state.selectCardRef = React.createRef();
   }
 
     
@@ -49,10 +50,14 @@ class MemoryModal extends React.Component{
         editMode:false,
         showSelectPeople:false,
         showSelectClouds:false,
+        showSelectCardTypes:false,
         addPeopleRef:null,
         addPeopleRect:null,
+        selectCardTypeRect:null,
         addCloudRef:null,
         addCloudRect:null,
+        selectCardRef:null,
+        cardTypes:[]
         
     }
    
@@ -62,6 +67,9 @@ class MemoryModal extends React.Component{
     this.props.onHideModal(this.props.memory)
   }
 
+  componentDidMount = () =>{
+    this.state.cardTypes = ['Standard','Small','Large']
+  }
 //---------------------------------------------------------------------------------
 
   componentDidUpdate = (prevProps,prevState) =>{
@@ -126,7 +134,10 @@ class MemoryModal extends React.Component{
 //------------------------------------------------------------------------
 
   toggleEditMode =() =>{
-    this.setState({editMode:!this.state.editMode , showSelectClouds:false , showSelectPeople:false })
+    this.setState({editMode:!this.state.editMode , 
+                    showSelectClouds:false , 
+                    showSelectPeople:false, 
+                    showSelectCardTypes:false })
     
   }
 
@@ -147,7 +158,10 @@ class MemoryModal extends React.Component{
 
 
   makeHeroFile = () =>{
-    console.log('make hero file');
+    
+    mem.updateHeroImage(this.props.memory.memid,this.state.activefile.fileurl)
+    this.state.activefile.ishero = true  
+    this.setState({activefile:this.state.activefile})
     
   }
   
@@ -211,6 +225,16 @@ class MemoryModal extends React.Component{
   
   //------------------------------------------------------------------------
 
+  handleSelectCardType = (index) => {
+    
+    this.props.memory.cardtype = index
+    mem.updateCardType(this.props.memory.memid,index)
+    this.setState({showSelectCardTypes:false})
+
+  }
+
+  //------------------------------------------------------------------------
+
   handleShowPeopleSearch = (evnt,item) =>{ 
     this.setState({showSelectPeople:!this.state.showSelectPeople,addPeopleRect:this.state.addPeopleRef.current.getBoundingClientRect()}) 
   }
@@ -233,8 +257,24 @@ class MemoryModal extends React.Component{
   }
 
   //------------------------------------------------------------------------
+
+  handleShowCardSearch= (evnt,item) =>{ 
+    
+    this.setState(prevState => ({showSelectCardTypes:!prevState.showSelectCardTypes,
+      selectCardTypeRect:this.state.selectCardRef.current.getBoundingClientRect()}))
+
+  }
+  
+  handleHideCardSearch = () => {
+    
+    this.setState({showSelectCardTypes:false})
+  }
+
+  //------------------------------------------------------------------------
+
   activeFileisHero =() =>{
-    var afile = this.state.activefile
+    let afile = this.state.activefile
+    
     
     if(afile){
       if(afile.ishero){
@@ -251,7 +291,6 @@ class MemoryModal extends React.Component{
 
   render(){
     
-   
     if(this.props.show){
       
         let memoryContent = this.renderMemoryContent()
@@ -437,8 +476,36 @@ let plus = null
 
 renderDetails =() => {
 
-    
-
+  let ctype = this.state.cardTypes[this.props.memory.cardtype]
+  let cardonclick = null
+  let cardmode = <li 
+              ref = { this.state.selectCardRef }
+              className='wordListItem'
+              key={'selectCard'}>
+                <ImageLabel 
+                  leftImg = { calendar }            
+                  label =   { ctype }
+                  onClick = { null }
+                />
+            </li>
+  if(this.state.editMode){
+    cardonclick = this.handleShowCardSearch
+    if(this.state.showSelectCardTypes) {
+      cardmode = null
+    }else{
+      cardmode = <li 
+                  ref = { this.state.selectCardRef }
+                  className='wordListItem'
+                  key={'selectCard'}>
+                    <ImageLabel 
+                      leftImg = { calendar }            
+                      label =   { ctype }
+                      onClick = { cardonclick }
+                    />
+                </li>
+    }
+  }
+  
   if(this.props.memory){    
    return (
       <div>
@@ -450,6 +517,7 @@ renderDetails =() => {
           className='wordListItem'
           key={'sss'}><ImageLabel leftImg = {calendar} label = {mem.getShortDate(this.props.memory.createdon) }/>
         </li>
+        {cardmode}
       </div>
    )
   }
@@ -529,8 +597,7 @@ renderImageZone =()=>{
 
     let heroImg = this.activeFileisHero() ? hero : heroOutline;
     let frender  = this.state.activefile ? null : this.renderDropHere
-
-
+    
     editControls = 
     <div className = 'imageEditConrols' >
       <img  
@@ -755,7 +822,6 @@ renderPeopleDropdown = () => {
 
 renderCloudDropdown = () => {
 
- 
   if(this.state.showSelectClouds){
     
       return (
@@ -777,6 +843,27 @@ renderCloudDropdown = () => {
 
 //------------------------------------------------------------------------
 
+renderCardTypeDropdown = () =>{
+
+  if(this.state.showSelectCardTypes){
+    
+    return (
+      // cRect,clouds, selected,showmulti,keepInList,callBack,userid,
+      DropSearch.cardDropSearch(
+            this.state.selectCardTypeRect,  // c-rect
+            this.state.cardTypes,           // Card Types      
+            this.props.memory.cardtype,     // current card Type      
+            this.handleSelectCardType,      // callback            
+      )
+  )
+  }else{
+    return null
+ }
+
+}
+
+//------------------------------------------------------------------------
+
 renderDetailsZone = () => {
 
   const keywords        = this.renderKeyWords()
@@ -786,6 +873,7 @@ renderDetailsZone = () => {
   const cornerCtrls     = this.renderCornerControls()
   const cloudDropdown   = this.renderCloudDropdown()
   const peopleDropdown  = this.renderPeopleDropdown()
+  const cardType        = this.renderCardTypeDropdown()
   
 
   return (
@@ -794,7 +882,7 @@ renderDetailsZone = () => {
         <h4>Tags </h4>
         <ul className='keyWordList scroll' >  { keywords } </ul>
       </div>
-      <div className = 'z25'>
+      <div className = 'z15'>
         <h4>People</h4>
         <ul className='peopleList scroll' >   { people   } </ul>
       </div>
@@ -808,6 +896,7 @@ renderDetailsZone = () => {
       </div>
       {cloudDropdown}
       {peopleDropdown}
+      {cardType}
       {cornerCtrls}              
     </div>  
   )

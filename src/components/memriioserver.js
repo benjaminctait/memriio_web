@@ -92,7 +92,7 @@ export function getMemories_Clouds ( cloudids)  {
 
 export function getMemories_Words_Clouds ( cloudids,words)  {  
 
-    console.log('getMemories_Words_Clouds - cloudids : ' + cloudids);
+    console.log('getMemories_Words_Clouds cloudids ' + cloudids + ' words ' + words );
 
     return new Promise((resolve,reject)=>{
         fetch('https://memrii-api.herokuapp.com/get_memories_keywords_clouds', {
@@ -418,8 +418,23 @@ export function getCloudPeople  (clouds,callback) {
 
 //------------------------------------------------------------
 
-export function updateHeroImage (memoryid,heroImageid ){
-    memriiolog(false,('Memriio.getAllImages : memoryid ' + memoryid ))
+export function updateHeroImage (memoryid,heroFileUrl ){
+    memriiolog(true,('Memriio.updateHeroImage : memoryid ' + memoryid + ' ' + heroFileUrl ))
+
+    fetch('https://memrii-api.herokuapp.com/setHeroImage_fileurl', {
+        method: 'post',headers: {
+            'Content-Type':'application/json'},
+                body:JSON.stringify({memid:memoryid,fileurl:heroFileUrl})})
+                .then(response => response.json())
+                .then(res => {
+                    if ( res.success ){
+                        memriiolog(false,('updateHeroImage : server response : ' + res.success))
+                        return true
+                    }else{
+                        memriiolog(false,('updateHeroImage : server response : ' + res.success + ' with ' + res.error)) 
+                        return false
+                    }
+                })    
 
 }
 

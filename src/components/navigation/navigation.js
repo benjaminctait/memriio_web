@@ -81,129 +81,91 @@ class Navigation extends React.Component {
 
   showMemories = () => {
     let selected = this.state.selectedClouds;
-    let searchwords = this.state.searchwords;
+    let wordarray = this.state.searchwords;
     let cloudids = [];
+    let userid = this.props.userid;
 
     if (selected)
-      cloudids = selected.map((cloud) => {
-        return parseInt(cloud.value);
-      });
-    console.log("showMemories ", cloudids);
+      cloudids = selected.map((cloud) => {return parseInt(cloud.value)});
+
+    console.log(
+      'showMemories user '+ userid + ' clouds ' + cloudids + ' searchwords ' + wordarray
+    );
 
     if (cloudids.length === 0) {
-      console.log("showMemories calling loadMemories(null)");
       this.props.loadMemories(null);
-    } else if (selected.length === 1 && selected[0].value === 0) {
+    } else if (cloudids.length === 1 && cloudids[0].value === 0) {
       // personal only
-      console.log("personal only " + selected[0].value);
+
       if (this.state.personalMemoryunsharedOnly) {
         // personal only - unshared only
-
-        console.log(
-          "personal : unshared " + this.props.userid + " " + searchwords
-        );
-        mem
-          .getMemories_PersonalOnly_Unshared(this.props.userid, searchwords)
-          .then(
-            (memories) => {
-              this.props.loadMemories(memories);
-            },
-            (error) => {
-              this.props.loadMemories(null);
-            }
-          );
-      } else {
-        // personal only - bth shared and undshared
-
-        console.log("personal : all " + this.props.userid + " " + searchwords);
-        mem.getMemories_PersonalOnly_All(this.props.userid, searchwords).then(
+        mem.getMemories_PersonalOnly_Unshared(userid, wordarray).then(
           (memories) => {
             this.props.loadMemories(memories);
           },
           (error) => {
             this.props.loadMemories(null);
-          }
+          },
+        );
+      } else {
+        // personal only - bth shared and undshared
+        mem.getMemories_PersonalOnly_All(userid, wordarray).then(
+          (memories) => {
+            this.props.loadMemories(memories);
+          },
+          (error) => {
+            this.props.loadMemories(null);
+          },
         );
       }
     } else if (cloudids.includes(0)) {
       // personal cloud + other clouds
-      console.log("personal cloud + other clouds  : cloudids " + cloudids);
 
-      if (searchwords.length > 0) {
+      if (wordarray.length > 0) {
         // clouds + searchwords
-
-        console.log(
-          "personal cloud + other clouds with searchwords " +
-            this.props.userid +
-            " " +
-            searchwords +
-            " " +
-            cloudids
-        );
-        mem
-          .getMemories_User_Words_Clouds(
-            this.props.userid,
-            searchwords,
-            cloudids
-          )
-          .then(
-            (memories) => {
-              this.props.loadMemories(memories);
-            },
-            (error) => {
-              this.props.loadMemories(null);
-            }
-          );
-      } else {
-        // clouds but no search words
-
-        console.log(
-          "personal cloud + other clouds no searchwords " +
-            this.props.userid +
-            " : " +
-            cloudids
-        );
-        mem.getMemories_User_Clouds(this.props.userid, cloudids).then(
+        mem.getMemories_User_Words_Clouds(userid, wordarray, cloudids).then(
           (memories) => {
             this.props.loadMemories(memories);
           },
           (error) => {
             this.props.loadMemories(null);
-          }
+          },
+        );
+      } else {
+        // clouds but no search words
+        mem.getMemories_User_Clouds(userid, cloudids).then(
+          (memories) => {
+            this.props.loadMemories(memories);
+          },
+          (error) => {
+            this.props.loadMemories(null);
+          },
         );
       }
     } else {
-      if (searchwords.length > 0) {
+      if (wordarray.length > 0) {
         // clouds + searchwords
-
-        console.log(
-          "other clouds only with searchwords : " +
-            searchwords +
-            " cloudids : " +
-            cloudids
-        );
-        mem.getMemories_Words_Clouds(cloudids, searchwords).then(
+        mem.getMemories_Words_Clouds(cloudids, wordarray).then(
           (memories) => {
             this.props.loadMemories(memories);
           },
           (error) => {
             this.props.loadMemories(null);
-          }
+          },
         );
       } else {
         // clouds but no search words
-
-        console.log("other clouds only no searchwords : cloud ids" + cloudids);
         mem.getMemories_Clouds(cloudids).then(
           (memories) => {
             this.props.loadMemories(memories);
           },
           (error) => {
             this.props.loadMemories(null);
-          }
+          },
         );
       }
     }
+   
   };
 
   //---------------------------------------------------------------------------------
