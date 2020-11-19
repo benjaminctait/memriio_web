@@ -9,20 +9,22 @@ export const UR_SYSTEM_ADMINISTRATOR = 0
 //-------------------------------------------------------------------------------
 
 export function showAdminOnNavBar( userid ){
-    console.log('ur : show admin on nav bar userid: ', userid===1);
-    return userid === 1
+    console.log('ur : showAdminOnNavBar: ', userid, ( userid === 1|| userid === 11 ) );
+    return (userid === 1 || userid === 11 ) // Ben or Eddie
 }
 
 //-------------------------------------------------------------------------------
 
 export function canEditMemories( userid ){
-    return userid === 1
+    console.log('ur : canEditMemories: ', userid, ( userid === 1|| userid === 11 ) );
+    return (userid === 1 || userid === 11 ) // Ben or Eddie
 }
 
 //-------------------------------------------------------------------------------
 
 export function canDeleteMemories( userid ){
-    return userid === 1
+    console.log('ur : canDeleteMemories: ', userid, ( userid === 1 ) );
+    return userid === 1  // Just Ben for now
 }
 
 //-------------------------------------------------------------------------------
