@@ -243,6 +243,7 @@ componentDidUpdate = (prevProps,prevState) =>{
       console.log('Promises length ' + Promises.length);
       Promise.all(Promises).then(values => {
         console.log('handleUploadMemory() - upload complete for memory id ' + newMem.memid );
+        this.onHide()
         this.props.onAddNewMemory(newMem)
       })
 
