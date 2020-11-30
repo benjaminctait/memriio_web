@@ -245,6 +245,15 @@ componentDidUpdate = (prevProps,prevState) =>{
         console.log('handleUploadMemory() - upload complete for memory id ' + newMem.memid );
         this.onHide()
         this.props.onAddNewMemory(newMem)
+
+        let cid = me.memoryClouds.findIndex (cloud => parseInt(cloud.id) === 1)  // only add points if the memory is shared with the UAP cloud
+        
+        if(cid !== -1 ){
+          cid = parseInt(me.memoryClouds[cid].id)
+          mem.postPointsEvent ( me.user.userid ,50 , this.state.memid , 'POINTS : Post new memory' , cid  )
+          mem.postStatusEvent ( me.user.userid , 5 , this.state.memid , 'STATUS : Post new memory' , cid )
+        }
+        
       })
 
        

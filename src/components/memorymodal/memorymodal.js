@@ -11,6 +11,8 @@ import edit from '../images/edit.png'
 import left from '../images/chevron-left.png'
 import right from '../images/chevron-right.png'
 import trash from '../images/trash.png'
+import commit from '../images/commit.png'
+import commitGrey from '../images/commitgrey.png'
 import hero from '../images/hero-full.png'
 import heroOutline from '../images/hero-outline-grey.png'
 import cloudIMG from '../images/cloud.png'
@@ -36,7 +38,34 @@ class MemoryModal extends React.Component{
   }
 
     
-    state ={
+  defaultState ={
+    memory:null,
+    taggedPeople:[],
+    memoryClouds:[],
+    searchWords:[],         
+    memfiles:null,
+    cloudPeople:[],
+    userClouds:[],
+    activefile:null,
+    author:null,
+    memfileIndex:0,
+    editMode:false,
+    showSelectPeople:false,
+    showSelectClouds:false,
+    showSelectCardTypes:false,
+    showEditStory:false,
+    hasBeenShared:false,
+    hasBeenEditorialised:false,
+    addPeopleRef:null,
+    addPeopleRect:null,
+    selectCardTypeRect:null,
+    addCloudRef:null,
+    addCloudRect:null,
+    selectCardRef:null,
+    cardTypes:[]
+    
+  }  
+  state ={
         memory:null,
         taggedPeople:[],
         memoryClouds:[],
@@ -51,6 +80,9 @@ class MemoryModal extends React.Component{
         showSelectPeople:false,
         showSelectClouds:false,
         showSelectCardTypes:false,
+        showEditStory:false,
+        hasBeenShared:false,
+        hasBeenEditorialised:false,
         addPeopleRef:null,
         addPeopleRect:null,
         selectCardTypeRect:null,
@@ -63,7 +95,7 @@ class MemoryModal extends React.Component{
    
 
   onHide = () =>{
-    this.state.editMode = false
+    this.state = this.defaultState
     this.props.onHideModal(this.props.memory)
   }
 
@@ -83,6 +115,12 @@ class MemoryModal extends React.Component{
         mem.getMemoryClouds      ( this.props.memory.memid   , ( clouds => { this.populateCloudInfo(clouds)}))
         mem.getMemorySearchWords ( this.props.memory.memid   , ( words  => { this.populateSearchWords(words)}))
         mem.getUserClouds        ( this.props.memory.userid  , ( clouds => { this.setState({userClouds:clouds})}))
+        console.log('componentUPDATE ', this.props.memory);
+        if(this.props.memory.editcount > 0){ 
+          this.state.hasBeenEditorialised = true
+        }else{
+          this.state.hasBeenEditorialised = false
+        }
       }      
     }
   }
@@ -125,7 +163,10 @@ class MemoryModal extends React.Component{
 //------------------------------------------------------------------------
 
   populateCloudInfo = (clouds) =>{
-    this.setState({memoryClouds:clouds})
+    let hasBeenShared = ( Array.isArray(clouds) && clouds.length > 0 )
+    
+    this.setState({memoryClouds:clouds,hasBeenShared:hasBeenShared})
+    
     mem.getCloudPeople (clouds,((people)=>{
       this.setState({cloudPeople:people})
     }))   
@@ -676,6 +717,32 @@ onStoryBlur = (e) => {
 
 //------------------------------------------------------------------------
 
+handleCommitMemory = ( ) => {
+  
+  console.log('handlecommit called', this.state.memoryClouds);
+  if( Array.isArray(this.state.memoryClouds ) && this.state.memoryClouds.length >0 ){
+    
+    let cid = this.state.memoryClouds.findIndex(cloud => parseInt(cloud.id) === 1) // search for UAP cloud only
+    
+    if(cid !== 1 )
+    {
+      cid = parseInt(this.state.memoryClouds[cid].id)
+      console.log('handleCommitMemory : ', cid)
+      mem.updateMemoryEditCount(this.props.memory.memid,this.props.memory.editcount + 1 )
+      mem.postPointsEvent (this.props.memory.userid,150,this.props.memory.memid,'POINTS : Memory editorial complete',cid)
+      mem.postStatusEvent (this.props.memory.userid,15,this.props.memory.memid,'STATUS : Memory editorial complete',cid)
+      this.setState({hasBeenEditorialised:true})
+    }
+    
+
+    
+  }
+
+
+}
+
+//------------------------------------------------------------------------
+
 handleDescriptionChange = (event) => {
   let fulltext = this.props.memory.title + ' ' + this.props.memory.story + ' ' + event.target.value
   this.addToSearchWords(fulltext)
@@ -733,9 +800,15 @@ searchWordExists = (word) => {
 
 renderStoryZone = () =>{
   const mem = this.props.memory
+  let storyEdit = <p className="f6 lh-copy measure mt2 black"> { mem.story } </p>
 
   if( this.state.editMode )
   {
+    if(this.state.showEditStory){
+      storyEdit = <textarea
+                    onBlur   = { this.onStoryBlur } className='input-reset storyEdit' onChange = { this.handleStoryChange } 
+                    type="text"  defaultValue = { mem.story } placeholder='Description' id="description" /> 
+    }
     return (
       <div className = 'infoColumn'>
         <input 
@@ -744,9 +817,7 @@ renderStoryZone = () =>{
         <input 
             onBlur = {this.onDescriptionBlur} className='input-reset descriptionEdit'  onChange = { this.handleDescriptionChange }
             type="text"  defaultValue = { mem.description } placeholder='Description' id="description" />
-        <textarea
-            onBlur   = { this.onStoryBlur } className='input-reset storyEdit' onChange = { this.handleStoryChange } 
-            type="text"  defaultValue = { mem.story } placeholder='Description' id="description" /> 
+        {storyEdit}
       </div> 
     )
   }else{
@@ -754,7 +825,7 @@ renderStoryZone = () =>{
       <div className = 'infoColumn'>
         <h4>{ mem.title } </h4>
         <p className="f6 lh-copy i measure mt2 mid-gray">{ mem.description }</p>
-        <p className="f6 lh-copy measure mt2 black"> { mem.story } </p>
+        {storyEdit}
       </div>  
     )
   }
@@ -766,8 +837,9 @@ renderStoryZone = () =>{
 renderCornerControls =() =>{
   let editBtn = null
   let deleteBtn = null
+  let commitBtn = null
   
-  if( ur.canEditMemories( this.props.activeUserid )  ){
+  if( ur.canEditMemories( this.props.activeUserid , this.props.memory, this.state.hasBeenShared)  ){
     editBtn=
       <img  
       className='closeBtn'                   
@@ -775,6 +847,21 @@ renderCornerControls =() =>{
       onClick={this.toggleEditMode} />
   }
   
+  if( ur.userIsAuthroizedCloudEditor( this.props.activeUserid, this.state.clouds )){
+    console.log('rendercornerCTRLS ', this.state.hasBeenEditorialised );
+    if (!this.state.hasBeenEditorialised ) 
+    {
+      commitBtn=
+      <img  
+      className='closeBtn'                   
+      src = {commit}
+      onClick={this.handleCommitMemory} />    
+    }
+      this.state.showEditStory = true;
+  }else{
+    this.state.showEditStory = false;
+  }
+
   if( ur.canDeleteMemories( this.props.activeUserid )) {  
     deleteBtn=
     <img  
@@ -791,7 +878,8 @@ renderCornerControls =() =>{
         className='closeBtn'                   
         src = {x}
         onClick={this.onHide} />
-
+      
+      {commitBtn}
       {editBtn}
 
     </div>

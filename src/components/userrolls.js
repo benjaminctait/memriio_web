@@ -15,9 +15,13 @@ export function showAdminOnNavBar( userid ){
 
 //-------------------------------------------------------------------------------
 
-export function canEditMemories( userid ){
-    console.log('ur : canEditMemories: ', userid, ( userid === 1|| userid === 11 ) );
-    return (userid === 1 || userid === 11 ) // Ben or Eddie
+export function canEditMemories( userid ,memory , isAlreadyShared ){
+    console.log('ur : canEditMemories: ', userid, memory, isAlreadyShared );
+
+    let authorisedCloudEditor = (userid === 1 || userid === 11 ) // Ben or Eddie
+    let userIsAuthor = ( userid === memory.userid )
+    
+    return ( ( userIsAuthor && !isAlreadyShared ) || authorisedCloudEditor )
 }
 
 //-------------------------------------------------------------------------------
@@ -28,3 +32,13 @@ export function canDeleteMemories( userid ){
 }
 
 //-------------------------------------------------------------------------------
+
+export function userIsAuthroizedCloudEditor( userid, clouds ){
+    console.log('ur : userIsAuthroizedCloudEditor: ', userid, clouds );
+
+    return ( userid === 1 || userid === 11 ) // Ben or Eddie
+}
+
+//-------------------------------------------------------------------------------
+
+

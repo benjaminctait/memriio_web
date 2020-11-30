@@ -571,6 +571,83 @@ export function updateMemword(searchword){
 
 //------------------------------------------------------------
 
+export function updateMemoryEditCount (memoryid,neweditcount){
+
+    memriiolog(false,('Memriio.updateMemoryEditCount : memoryid ' + memoryid + ' new editcount : ' + neweditcount))
+  
+    fetch('https://memrii-api.herokuapp.com/set_memory_editcount', {
+        method: 'post',headers: {
+            'Content-Type':'application/json'},
+                body:JSON.stringify({memoryid:memoryid,editcount:neweditcount})})
+                .then(response => response.json())
+                .then(res => {
+                    if ( res.success ){
+                        memriiolog(false,('updateMemoryEditCount :server response : ' + res.success))
+                        return true
+                    }else{
+                        memriiolog(false,('updateMemoryEditCount :server response : ' + res.success + ' with ' + res.error))
+                        return false
+                    }
+                })
+}
+
+
+//------------------------------------------------------------
+
+export function postStatusEvent (userid,creditsToAdd,memid, message,cloudid ){
+
+    memriiolog(false,('Memriio.postStatusEvent : userid ' + userid 
+        + ' credits : ' + creditsToAdd 
+        + ' memory : ' + memid 
+        + ' message : ' + message
+        + ' cloudid : ' + cloudid
+        ))
+  
+    fetch('https://memrii-api.herokuapp.com/register_status_credits', {
+        method: 'post',headers: {
+            'Content-Type':'application/json'},
+                body:JSON.stringify({userid:userid,statuscredits:creditsToAdd,memid:memid,description:message,cloudid:cloudid})})
+                .then(response => response.json())
+                .then(res => {
+                    if ( res.success ){
+                        memriiolog(false,('postStatusEvent :server response : ' + res.success))
+                        return true
+                    }else{
+                        memriiolog(false,('postStatusEvent :server response : ' + res.success + ' with ' + res.error))
+                        return false
+                    }
+                })
+}
+
+//------------------------------------------------------------
+
+export function postPointsEvent (userid,pointsToAdd,memid, message, cloudid ){
+
+    memriiolog(false,('Memriio.postPointsEvent : userid ' + userid 
+        + ' points : ' + pointsToAdd 
+        + ' memory : ' + memid 
+        + ' message : ' + message
+        + ' cloudid : ' + cloudid))
+  
+    fetch('https://memrii-api.herokuapp.com/register_points', {
+        method: 'post',headers: {
+            'Content-Type':'application/json'},
+                body:JSON.stringify({ userid:userid , points:pointsToAdd , memid:memid , description:message , cloudid:cloudid })})
+                .then(response => response.json())
+                .then(res => {
+                    if ( res.success ){
+                        memriiolog(false,('postPointsEvent :server response : ' + res.success))
+                        return true
+                    }else{
+                        memriiolog(false,('postPointsEvent :server response : ' + res.success + ' with ' + res.error))
+                        return false
+                    }
+                })
+}
+
+
+//------------------------------------------------------------
+
 export function updateCardType (memoryid,cardtype){
 
     memriiolog(false,('Memriio.updateCardType : memoryid ' + memoryid + ' card type : ' + cardtype))

@@ -176,6 +176,7 @@
 
 .footer{
   position: absolute;
+  width: 14%;
   bottom : -40px;
   right : -0px;
   display: flex;
