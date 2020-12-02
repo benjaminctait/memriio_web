@@ -61,7 +61,7 @@ determineFileCategory = (memfile) => {
 
 isImage= (fileExtension) =>{
     let ext = fileExtension.toLowerCase()
-    let filetypes = ['jpeg','jpg','png']
+    let filetypes = ['jpeg','jpg','png','heic']
     let found = filetypes.indexOf(ext)
     return !(found === -1)    
 }

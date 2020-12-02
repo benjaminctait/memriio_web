@@ -115,7 +115,7 @@ class MemoryModal extends React.Component{
         mem.getMemoryClouds      ( this.props.memory.memid   , ( clouds => { this.populateCloudInfo(clouds)}))
         mem.getMemorySearchWords ( this.props.memory.memid   , ( words  => { this.populateSearchWords(words)}))
         mem.getUserClouds        ( this.props.memory.userid  , ( clouds => { this.setState({userClouds:clouds})}))
-        console.log('componentUPDATE ', this.props.memory);
+        
         if(this.props.memory.editcount > 0){ 
           this.state.hasBeenEditorialised = true
         }else{
