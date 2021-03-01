@@ -192,6 +192,7 @@ class MemoryModal extends React.Component{
 
   deleteFileFromMemory =() =>{
     console.log('delte file from memroy');
+    mem.updateMemoryEditDateToNow(this.props.memory.memid)
     
   }
   
@@ -201,6 +202,7 @@ class MemoryModal extends React.Component{
   makeHeroFile = () =>{
     
     mem.updateHeroImage(this.props.memory.memid,this.state.activefile.fileurl)
+    mem.updateMemoryEditDateToNow(this.props.memory.memid)
     this.state.activefile.ishero = true  
     this.setState({activefile:this.state.activefile})
     
@@ -217,6 +219,7 @@ class MemoryModal extends React.Component{
       tp.reverse()
       this.setState({taggedPeople:tp})
       mem.addTaggedPerson(this.props.memory.memid,Person.userid)
+      mem.updateMemoryEditDateToNow(this.props.memory.memid)
     }
   }
 
@@ -228,6 +231,7 @@ class MemoryModal extends React.Component{
     mem.deleteTaggedCloud(this.props.memory.memid,Cloud.id)
     .then(result =>{
       this.populateCloudInfo(cl)
+      mem.updateMemoryEditDateToNow(this.props.memory.memid)
     })
 
   }
@@ -239,6 +243,7 @@ class MemoryModal extends React.Component{
     this.state.taggedPeople.map( p =>{if(p.userid !== Person.userid)tp.push(p)})
     this.setState({taggedPeople:tp})
     mem.deleteTaggedPerson(this.props.memory.memid,Person.userid)
+    mem.updateMemoryEditDateToNow(this.props.memory.memid)
   }
 
   //------------------------------------------------------------------------
@@ -259,6 +264,7 @@ class MemoryModal extends React.Component{
       mem.addTaggedCloud(this.props.memory.memid,newCloudID)
       .then(result => {
         this.populateCloudInfo(cl)
+        mem.updateMemoryEditDateToNow(this.props.memory.memid)
         
       })
     }
@@ -270,6 +276,7 @@ class MemoryModal extends React.Component{
     
     this.props.memory.cardtype = index
     mem.updateCardType(this.props.memory.memid,index)
+    mem.updateMemoryEditDateToNow(this.props.memory.memid)
     this.setState({showSelectCardTypes:false})
 
   }
@@ -374,6 +381,7 @@ handleSearchWordClick = (itemKey,upState) =>{
   this.state.searchWords[ind].included = upState
   console.log('heandlesearchwordClick ' + JSON.stringify(this.state.searchWords[ind]))
   mem.updateMemword(this.state.searchWords[ind])
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
   this.setState({searchWords:this.state.searchWords})
   
 }
@@ -692,6 +700,7 @@ onTitleBlur = (e) => {
   this.props.memory.title = newTitle
   mem.updateTitle(this.props.memory.memid,newTitle)
   mem.setMemorySearchWords(this.props.memory.memid,this.state.searchWords)    
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
   
 }
 //------------------------------------------------------------------------
@@ -702,6 +711,7 @@ onDescriptionBlur = (e) => {
   this.props.memory.description = newDescription
   mem.updateDescription(this.props.memory.memid,newDescription)
   mem.setMemorySearchWords(this.props.memory.memid,this.state.searchWords)
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
     
 }
 //------------------------------------------------------------------------
@@ -712,6 +722,7 @@ onStoryBlur = (e) => {
   this.props.memory.story = newStory
   mem.updateStory(this.props.memory.memid,newStory)    
   mem.setMemorySearchWords(this.props.memory.memid,this.state.searchWords)
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
 
 }
 
@@ -731,6 +742,7 @@ handleCommitMemory = ( ) => {
       mem.updateMemoryEditCount(this.props.memory.memid,this.props.memory.editcount + 1 )
       mem.postPointsEvent (this.props.memory.userid,150,this.props.memory.memid,'POINTS : Memory editorial complete',cid)
       mem.postStatusEvent (this.props.memory.userid,15,this.props.memory.memid,'STATUS : Memory editorial complete',cid)
+      mem.updateMemoryEditDateToNow(this.props.memory.memid)
       this.setState({hasBeenEditorialised:true})
     }
     
@@ -1004,9 +1016,11 @@ handleDropfiles = async (acceptedFiles) =>{
 
       if( mem.isSupportedImageFile( file.name ) ){
         this.prepAndUploadImageFile ( file,false,1)
+        mem.updateMemoryEditDateToNow(this.props.memory.memid)
 
       }else if( mem.isSupportedVideoFile( file.name )){
         this.prepAndUploadVideoFile ( file,false,1 ) 
+        mem.updateMemoryEditDateToNow(this.props.memory.memid)
 
       }else{
         alert('File type ' + mem.getExtension(file.name) + ' not yet implemented' )

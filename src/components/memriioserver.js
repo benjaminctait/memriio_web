@@ -594,6 +594,30 @@ export function updateMemoryEditCount (memoryid,neweditcount){
 
 //------------------------------------------------------------
 
+export function updateMemoryEditDateToNow ( memoryid ){
+
+    memriiolog(false,('mem.updateMemoryEditDateToNow : memoryid ' + memoryid ))
+  
+    fetch('https://memrii-api.herokuapp.com/update_memory_modified', {
+        method: 'post',headers: {
+            'Content-Type':'application/json'},
+                body:JSON.stringify({memid:memoryid})})
+                .then(response => response.json())
+                .then(res => {
+                    if ( res.success ){
+                        memriiolog(false,('updateMemoryEditDateToNow :server response : ' + res.success))
+                        return true
+                    }else{
+                        memriiolog(false,('updateMemoryEditDateToNow :server response : ' + res.success + ' with ' + res.error))
+                        return false
+                    }
+                })
+}
+
+
+
+//------------------------------------------------------------
+
 export function postStatusEvent (userid,creditsToAdd,memid, message,cloudid ){
 
     memriiolog(false,('Memriio.postStatusEvent : userid ' + userid 
