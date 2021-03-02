@@ -759,6 +759,7 @@ handleDescriptionChange = (event) => {
   let fulltext = this.props.memory.title + ' ' + this.props.memory.story + ' ' + event.target.value
   this.addToSearchWords(fulltext)
   this.props.memory.description = event.target.value
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
 }
 
 handleTitleChange       = (event) => {
@@ -766,12 +767,14 @@ handleTitleChange       = (event) => {
   let fulltext = this.props.memory.description + ' ' + this.props.memory.story + ' ' + event.target.value
   this.addToSearchWords(fulltext) 
   this.props.memory.title = event.target.value
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
 }
 
 handleStoryChange       = (event) => {
   let fulltext = this.props.memory.description + ' ' + this.props.memory.title + ' ' + event.target.value
   this.addToSearchWords(fulltext)
   this.props.memory.story = event.target.value
+  mem.updateMemoryEditDateToNow(this.props.memory.memid)
 }
 
 addToSearchWords = (textContent) =>{
