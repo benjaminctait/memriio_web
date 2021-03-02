@@ -756,6 +756,7 @@ handleCommitMemory = ( ) => {
 //------------------------------------------------------------------------
 
 handleDescriptionChange = (event) => {
+  console.log(`handle description change ${this.props.memory.memid}`);
   let fulltext = this.props.memory.title + ' ' + this.props.memory.story + ' ' + event.target.value
   this.addToSearchWords(fulltext)
   this.props.memory.description = event.target.value
@@ -764,6 +765,7 @@ handleDescriptionChange = (event) => {
 
 handleTitleChange       = (event) => {
 
+  console.log(`handle title change ${this.props.memory.memid}`);
   let fulltext = this.props.memory.description + ' ' + this.props.memory.story + ' ' + event.target.value
   this.addToSearchWords(fulltext) 
   this.props.memory.title = event.target.value
@@ -771,6 +773,7 @@ handleTitleChange       = (event) => {
 }
 
 handleStoryChange       = (event) => {
+  console.log(`handle story change ${this.props.memory.memid}`);
   let fulltext = this.props.memory.description + ' ' + this.props.memory.title + ' ' + event.target.value
   this.addToSearchWords(fulltext)
   this.props.memory.story = event.target.value

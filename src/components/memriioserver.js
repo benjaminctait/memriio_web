@@ -596,7 +596,7 @@ export function updateMemoryEditCount (memoryid,neweditcount){
 
 export function updateMemoryEditDateToNow ( memoryid ){
 
-    memriiolog(true,('mem.updateMemoryEditDateToNow : memoryid ' + memoryid ))
+    console.log('mem.updateMemoryEditDateToNow : memoryid ' + memoryid )
   
     fetch('https://memrii-api.herokuapp.com/update_memory_modified', {
         method: 'post',headers: {
@@ -605,10 +605,10 @@ export function updateMemoryEditDateToNow ( memoryid ){
                 .then(response => response.json())
                 .then(res => {
                     if ( res.success ){
-                        memriiolog(true,('updateMemoryEditDateToNow :server response : ' + res.success))
+                        console.log('updateMemoryEditDateToNow :server response : ' + res.success)
                         return true
                     }else{
-                        memriiolog(true,('updateMemoryEditDateToNow :server response : ' + res.success + ' with ' + res.error))
+                        console.log('updateMemoryEditDateToNow :server response : ' + res.success + ' with ' + res.error)
                         return false
                     }
                 })
